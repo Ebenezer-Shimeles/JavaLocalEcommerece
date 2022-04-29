@@ -20,6 +20,8 @@ public class SignupView extends View{
 		 mainComponent.setVisible(false);
 		 signupButton.setVisible(false);
 		 label.setVisible(false);
+		 
+		 mainComponent.setLayout(new BorderLayout());
 		 mainComponent.add(signupButton, BorderLayout.SOUTH);
 		 mainComponent.add(label, BorderLayout.NORTH);
 		 signupButton.addActionListener(new SignUpButtonListener());

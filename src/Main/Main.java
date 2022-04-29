@@ -23,6 +23,7 @@ public class Main {
     		mainWindow.getContentPane().setBackground(Color.white);
     		mainWindow.registerView("/signup", new SignupView());
       		mainWindow.registerView("/login", new LoginView());
+      		//mainWindow.setLayout(new FlowLayout());
     		
     		//mainWindow.registerView("/login", new LoginView());
     		mainWindow.setVisible(true);

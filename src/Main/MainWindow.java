@@ -45,7 +45,7 @@ public class MainWindow extends JFrame{
 		 if(viewLen > 0 && currentView != null) { 
 			 System.out.println("Clearing page");
 			 currentView.clear();
-			 this.remove(this.currentView.getMainComponent());
+			// this.remove(this.currentView.getMainComponent());
 		 }
 		 int indexOfView = viewIndex(viewName);
 		 if(indexOfView == -1) throw new Exception("Page does not exist");
