@@ -1,3 +1,5 @@
+package Main;
+
 import java.sql.*;
 import java.awt.*;
 import javax.swing.*;
@@ -20,9 +22,13 @@ public class Main {
     		mainWindow.setBackground(Color.white);
     		mainWindow.getContentPane().setBackground(Color.white);
     		mainWindow.registerView("/signup", new SignupView());
-    		mainWindow.registerView("/login", new LoginView());
+      		mainWindow.registerView("/login", new LoginView());
+    		
+    		//mainWindow.registerView("/login", new LoginView());
     		mainWindow.setVisible(true);
-    		mainWindow.goToView("/signup");
+    		
+    		mainWindow.goToView("/login");
+    		
     	
     		//mainWindow.setIconImage(new Image(""));
     	}catch(Exception e) {

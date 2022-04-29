@@ -4,9 +4,11 @@ import java.sql.*;
 
 public abstract class Model {
 	 protected static Connection con;
-	
-	  
-	 
+	 public abstract boolean exists();
+	 public abstract boolean create();
+	 public abstract boolean delete();
+	 public abstract boolean update();
+	 public abstract boolean refresh();
      static {
     	 try {
     	    	//  Runtime.getRuntime().loadLibrary("C:/Windows/System32/crypt32.dll");
@@ -19,6 +21,7 @@ public abstract class Model {
     	        
     	          System.out.println("Database Connected");
     	      } catch(Exception e) {
+    	    	  System.out.println("Cannot connect :((");
     	    	  e.printStackTrace();
     	      }
     	    
