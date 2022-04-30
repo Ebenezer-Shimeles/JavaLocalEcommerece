@@ -16,15 +16,13 @@ public class LoginView extends View{
 	 }
 	 
 	 public LoginView(){
-		 loginButton.setVisible(false);
+		 registerComponent(loginButton);
 		 loginButton.addActionListener(new LoginButtonListener());
 	 }
      public JComponent build() {
     	 return  loginButton;
      }
-     public void clear() {
-    	 loginButton.setVisible(false);
-     }
+ 
      public void show() {
     	 loginButton.setVisible(true);
      }

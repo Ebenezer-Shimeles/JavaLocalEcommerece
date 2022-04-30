@@ -3,7 +3,22 @@ import javax.swing.*;
 
 public abstract class View {
       abstract public JComponent build();
-      abstract public  void clear();
+      //abstract public  void clear();
       abstract public void show();
       abstract public JComponent getMainComponent();
+      
+      protected JComponent[] components = new JComponent[100];
+      protected int componentLen = 0;
+      
+ 	  protected void registerComponent(JComponent component) {
+		components[componentLen] = component;
+		componentLen++;
+		component.setVisible(false);
+ 	  }
+ 	  public void clear() {
+ 		  for(int i=0;i<componentLen;i++) components[i].setVisible(false);
+ 	  }
+ 	  public void init() {
+ 		 for(int i=0;i<componentLen;i++) components[i].setVisible(true);
+ 	  }
 }

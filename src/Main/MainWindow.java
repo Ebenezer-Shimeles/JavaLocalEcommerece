@@ -34,6 +34,7 @@ public class MainWindow extends JFrame{
 			System.out.println("Error this view is already registered");
 			return;
 		}
+		view.init();
 		viewNames[viewLen] = viewName;
 		views[viewLen] = view;
 		viewLen++;

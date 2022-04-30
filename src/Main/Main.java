@@ -7,7 +7,7 @@ import Views.*;
 
 import Models.User;
 public class Main {
-	public static MainWindow mainWindow = new MainWindow("Ecommerece");
+	public static MainWindow mainWindow = new MainWindow("Gebeya Ecommerece");
 	
     public static void main(String args[]) {
     	try {
@@ -28,7 +28,7 @@ public class Main {
     		//mainWindow.registerView("/login", new LoginView());
     		mainWindow.setVisible(true);
     		
-    		mainWindow.goToView("/login");
+    		mainWindow.goToView("/signup");
     		
     	
     		//mainWindow.setIconImage(new Image(""));
