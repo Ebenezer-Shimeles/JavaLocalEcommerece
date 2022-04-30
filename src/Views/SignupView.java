@@ -129,7 +129,11 @@ public class SignupView extends View implements ActionListener, ItemListener{
           
            if(id != null){
         	   Globals.userId = id;
-        	   
+      		    try {
+	    		    Main.mainWindow.goToView("/main");
+	    		 }catch(Exception v) {
+	    			 v.printStackTrace();
+	    		 }
            }
            //showMessage(name + " " + lastName + " "+email + " " + password);
      }

@@ -84,6 +84,11 @@ public class LoginView extends View implements ActionListener{
 	    	 if(id!= null) {
 	    		 Globals.userId = id;
 	    		 showMessage("Welcome!");
+	    		 try {
+	    		    Main.mainWindow.goToView("/main");
+	    		 }catch(Exception v) {
+	    			 v.printStackTrace();
+	    		 }
 	    	 }
 	    	 else {
 	    		 showMessage("Wrong password");
