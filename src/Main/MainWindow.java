@@ -54,6 +54,7 @@ public class MainWindow extends JFrame{
 	     this.add( views[indexOfView].build());
 		 currentView = views[indexOfView];
 		 currentView.show();
+		 currentView.init();
 		 first = false;
 	 }
     public  MainWindow(String title){

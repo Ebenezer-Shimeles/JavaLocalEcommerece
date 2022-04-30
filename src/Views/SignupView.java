@@ -5,18 +5,26 @@ import java.awt.*;
 import java.awt.event.*;
 import Main.Main;
 
-public class SignupView extends View{
+public class SignupView extends View implements ActionListener{
+	
+	private String name, email, lastName, password; //add getters and setter latter
+	
+	
+	
+	 private String[] javaOptions = {"Male", "Female"};
 	 private JPanel mainComponent = new JPanel();
 	 private JPanel inputPanel = new JPanel();
-	 private JButton signupButton = new JButton("Signup");
+	 private JButton signupButton = new JButton("Register");
 	 private JLabel label = new JLabel("Hello, Welcome to our GEBEYA COMERCE");
-	 
-	 private JTextField emailField = new JTextField("This is my email");
-	 private JTextField nameField = new JTextField("This is my user name");
-	 private JTextField passwordField = new JTextField("This is my user name");
-	 private JTextField lastNameField = new JTextField("This is my user name");
-	 private JComboBox genderMaleRadio = new JComboBox();
-	 
+	 private final static int inputLen = 300; 
+	 private JTextField emailField = new JTextField("Email");
+	 private JTextField nameField = new JTextField("Name");
+	 private JTextField passwordField = new JTextField("Password");
+	 private JTextField lastNameField = new JTextField("Last Name");
+	 private JComboBox genderMaleRadio = new JComboBox(javaOptions);
+	 private JLabel girlImage = new JLabel(
+			 new ImageIcon(getClass().getClassLoader().getResource("girl.jpg"))
+			 );
 	 
 	 public JComponent getMainComponent(){
 		 return mainComponent;
@@ -30,6 +38,8 @@ public class SignupView extends View{
 //		 label.setVisible(false);
 		 label.setBackground(Color.blue);
 		// inputPanel.setLayout(null);
+		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,label.getFont().getSize());
+		 label.setFont(newLabelFont);
 		 registerComponent(inputPanel);
 		 registerComponent(signupButton);
 		 registerComponent(label);
@@ -38,7 +48,7 @@ public class SignupView extends View{
 		 registerComponent(genderMaleRadio);
 		 registerComponent(nameField);
 		 registerComponent(lastNameField);
-		 
+		 registerComponent(girlImage); 
 		 init();
 		 
 		 
@@ -47,11 +57,14 @@ public class SignupView extends View{
 		
 		 label.setBounds(50, 50, 800,20);
 		 
-		 nameField.setBounds(50, 160, 600, 30);
-		 emailField.setBounds(50, 200, 600, 30);
-		 genderMaleRadio.setBounds(50, 260, 600, 30);
-		 passwordField.setBounds(50, 310, 600, 30);
-		 signupButton.setBounds(50, 360, 600, 30);
+		 
+		 nameField.setBounds(50, 160, inputLen, 30);
+		 emailField.setBounds(50, 200, inputLen, 30);
+		 genderMaleRadio.setBounds(50, 260, inputLen, 30);
+		 passwordField.setBounds(50, 310, inputLen, 30);
+		 signupButton.setBounds(50, 360, inputLen, 30);
+		 girlImage.setBounds(600, 0, 600, 500);
+		 inputPanel.setBounds(0,0, 1000, 1000);
 		 
 		 inputPanel.add(signupButton);
 		 inputPanel.add(label);
@@ -60,13 +73,20 @@ public class SignupView extends View{
 		 inputPanel.add(genderMaleRadio);
 		 inputPanel.add(nameField);
 		 inputPanel.add(lastNameField);
-		 inputPanel.setBackground(Color.LIGHT_GRAY);
+		 inputPanel.setBackground(Color.white);
+		 
+		 girlImage.setBackground(Color.GRAY);
+		 mainComponent.setLayout(null);
+		 
 		 mainComponent.add(inputPanel);
 		 
-		 signupButton.addActionListener(new SignUpButtonListener());
+		// nameField.addActionListener(this);
+		 
+		 inputPanel.add(girlImage);
+		 signupButton.addActionListener(this);
 	 }
      public JComponent build() {
-    	 return inputPanel;
+    	 return mainComponent;
      }
  
      public void show() {
@@ -75,16 +95,16 @@ public class SignupView extends View{
     	 signupButton.setVisible(true);
     	 label.setVisible(true);
      }
+     @Override
+     public void actionPerformed(ActionEvent e) {
+    	   
+           name = this.nameField.getText();
+           email = this.emailField.getText();
+           lastName = this.lastNameField.getText();
+           password = this.passwordField.getText();
+          
+           showMessage(name + " " + lastName + " "+email + " " + password);
+     }
 }
 
 
-class SignUpButtonListener implements ActionListener{
-	public void actionPerformed(ActionEvent e) {
-		 try {
-             Main.mainWindow.goToView("/login");
-		 }catch(Exception ee) {
-			 System.out.print("Page does not exist");
-		 }
-	}
-	
-}

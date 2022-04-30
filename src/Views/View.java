@@ -1,6 +1,8 @@
 package Views;
 import javax.swing.*;
 
+import Main.Main;
+
 public abstract class View {
       abstract public JComponent build();
       //abstract public  void clear();
@@ -20,5 +22,8 @@ public abstract class View {
  	  }
  	  public void init() {
  		 for(int i=0;i<componentLen;i++) components[i].setVisible(true);
+ 	  }
+ 	  public void showMessage(String msg) {
+ 		 JOptionPane.showMessageDialog(Main.mainWindow, msg);
  	  }
 }
