@@ -10,7 +10,10 @@ public class MainWindow extends JFrame{
 	 private int viewLen = 0;
 	 private boolean first = true;
 	 
-
+	 public void showMessage(String msg) {
+		 if(currentView!= null) currentView.showMessage(msg);
+	 }
+ 
 	 private int viewIndex(String vn) {
 		 for(int i=0;i<viewLen;i++) {
 			 System.out.println("Comparing " + viewNames[i]+ " " + vn);
@@ -46,7 +49,7 @@ public class MainWindow extends JFrame{
 		 if(viewLen > 0 && currentView != null) { 
 			 System.out.println("Clearing page");
 			 currentView.clear();
-			// this.remove(this.currentView.getMainComponent());
+			  this.remove(this.currentView.getMainComponent());
 		 }
 		 int indexOfView = viewIndex(viewName);
 		 if(indexOfView == -1) throw new Exception("Page does not exist");
@@ -59,5 +62,6 @@ public class MainWindow extends JFrame{
 	 }
     public  MainWindow(String title){
     	 super(title);
+    	 this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("icon.jpg")).getImage());
      }
 }

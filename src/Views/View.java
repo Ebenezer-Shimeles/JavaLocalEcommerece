@@ -18,10 +18,17 @@ public abstract class View {
 		component.setVisible(false);
  	  }
  	  public void clear() {
- 		  for(int i=0;i<componentLen;i++) components[i].setVisible(false);
+ 		  for(int i=0;i<componentLen;i++) {
+ 			  if(components[i] == null) continue;
+ 			  components[i].setVisible(false); 
+ 			  //getMainComponent().remove( components[i]);
+ 			 }
  	  }
  	  public void init() {
- 		 for(int i=0;i<componentLen;i++) components[i].setVisible(true);
+ 		 for(int i=0;i<componentLen;i++) {
+ 			 components[i].setVisible(true);
+ 			 
+ 		 }
  	  }
  	  public void showMessage(String msg) {
  		 JOptionPane.showMessageDialog(Main.mainWindow, msg);

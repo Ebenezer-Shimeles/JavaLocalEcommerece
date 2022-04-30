@@ -37,6 +37,23 @@ public class User extends Model {
 	   System.out.println(
 			   id + " " + name + " " +lastName+ " " + gender+ " " + password + " " + age + " ");
 	}
+	public static User findByEmail(String email) throws SQLException{
+		ResultSet result = query("select top 1 * from users where email = '"+ email+ "'");
+    	if(!result.next()) return null;
+    	//System.out.println("Results Number: " + getCount(result));
+    	var user = new User(
+    			result.getString("name"),
+    			result.getString("last_name"),
+    			result.getString("email"),
+    			result.getString("gender").charAt(0),
+    			result.getString("password"),
+    			result.getInt("age"),
+    			result.getInt("id")
+    	);
+    	System.out.print("Found user     ");
+    	user.print();
+    	return user;
+	}
     public static User findByPk(String primaryKey) throws SQLException{
     	ResultSet result = query("select top 1 * from users where id = "+ primaryKey);
     	if(!result.next()) return null;
@@ -111,7 +128,7 @@ public class User extends Model {
     public boolean exists(){
     	//return 
     	try {
-    		return findByPk("" + this.id) == null? false: true;
+    		return findByEmail(this.email) == null? false: true;
     	}
      	catch(Exception e) {
      		System.out.println("Something went wrong when checking if the user exists");
