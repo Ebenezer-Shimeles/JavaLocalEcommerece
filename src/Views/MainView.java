@@ -18,7 +18,7 @@ public class MainView extends View{
    public MainView(){
 	   registerComponent(logoutButton);
 	   registerComponent(nameLabel);
-	   
+	   init();
 	   
 	   mainComponent.setLayout(null);
 	   nameLabel.setBounds(0, 0, 50, 130);

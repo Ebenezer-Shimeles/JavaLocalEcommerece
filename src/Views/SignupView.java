@@ -128,9 +128,10 @@ public class SignupView extends View implements ActionListener, ItemListener{
            String id= UserInteractor.createUser(name, lastName, email, gender, password, age);
           
            if(id != null){
-        	   Globals.userId = id;
+        	     System.out.println("IDDDDDDDD: "+ id);
+        	     Globals.userId = id;
       		    try {
-	    		    Main.mainWindow.goToView("/main");
+	    		    Main.mainWindow.goToView("/login");
 	    		 }catch(Exception v) {
 	    			 v.printStackTrace();
 	    		 }

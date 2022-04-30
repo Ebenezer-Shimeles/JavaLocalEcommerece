@@ -22,7 +22,9 @@ public class UserInteractor {
     		return null;
     	}
     	else {
+    		
     		user.create();
+    		user.refresh();
     		return user.getId() + "";
     	}
     	

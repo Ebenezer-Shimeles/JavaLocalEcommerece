@@ -83,17 +83,22 @@ public class User extends Model {
     }
     public boolean refresh() {
     	try {
-    		var user = findByPk("" + this.id);
-    		this.name = user.name;
-    		this.age = user.age;
-    		this.gender = user.gender;
-    		this.password = user.password;
-    		this.id= user.id;
-    		this.lastName = user.lastName;
+    		var user = findByEmail("" + this.email);
+    		if(user == null) {
+    			System.err.println("User is not found while refreshing!");
+    			return false;
+    		}
+    		this.name = user.getName();
+    		this.age = user.getAge();
+    		this.gender = user.getGender();
+    		this.password = user.getPassword();
+    		this.id= user.getId();
+    		this.lastName = user.getLastName();
     		return true;
     	}
     	catch(Exception e) {
     		System.out.println("Could not refresh the user :(");
+    		e.printStackTrace();
     		return false;
     	}
     }

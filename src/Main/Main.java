@@ -23,15 +23,16 @@ public class Main {
     		//mainWindow.setIconImage(icon.getImage());
     		mainWindow.setBackground(Color.white);
     		mainWindow.getContentPane().setBackground(Color.white);
-    		mainWindow.registerView("/signup", new SignupView());
+    	
       		mainWindow.registerView("/login", new LoginView());
+      		mainWindow.registerView("/signup", new SignupView());
       		mainWindow.registerView("/main", new MainView());
       		//mainWindow.setLayout(new FlowLayout());
     		
     		//mainWindow.registerView("/login", new LoginView());
     		mainWindow.setVisible(true);
     		
-    		mainWindow.goToView("/login");
+    		mainWindow.goToView("/signup");
     		
     	
     		//mainWindow.setIconImage(new Image(""));

@@ -29,6 +29,10 @@ public abstract class Model {
      static public ResultSet query(String sqlQuery) throws SQLException{
     	 System.out.println("Executing "+ sqlQuery);
     	 Statement statement = con.createStatement();
-    	 return statement.executeQuery(sqlQuery);
+    	 if(sqlQuery.startsWith("select")) return statement.executeQuery(sqlQuery);
+    	 else {
+    		 statement.execute(sqlQuery);
+    		 return null;
+    	 }
      }  	 
 } 
