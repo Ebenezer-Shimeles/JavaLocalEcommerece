@@ -12,11 +12,13 @@ public class Main {
     public static void main(String args[]) {
     	try {
     		String iconLocation = "C:\\Users\\natan\\eclipse-workspace\\Ecommerece\\src\\Views\\icon.jpg";
+    		var user = new User("Ebenezer", "Shimeles", "eye@yahoo.com",'M', "muze", 20, 7);
     		
+    		System.out.println(user.exists());
     		ImageIcon icon = new ImageIcon(iconLocation);
     	
     		
-    		mainWindow.setSize(1200, 600);
+    		mainWindow.setSize(1000, 700);
     		mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     		mainWindow.setIconImage(icon.getImage());
     		mainWindow.setBackground(Color.white);

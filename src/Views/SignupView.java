@@ -7,8 +7,9 @@ import Main.Main;
 
 public class SignupView extends View{
 	 private JPanel mainComponent = new JPanel();
-	 private JButton signupButton = new JButton("Hello, Welcome to our Gebeya Ecommerce");
-	 private JLabel label = new JLabel("Sign up");
+	 private JPanel inputPanel = new JPanel();
+	 private JButton signupButton = new JButton("Signup");
+	 private JLabel label = new JLabel("Hello, Welcome to our GEBEYA COMERCE");
 	 
 	 private JTextField emailField = new JTextField("This is my email");
 	 private JTextField nameField = new JTextField("This is my user name");
@@ -24,12 +25,12 @@ public class SignupView extends View{
 
 	 
 	 public SignupView(){
-//		 mainComponent.setVisible(false);
+//		 inputPanel.setVisible(false);
 //		 signupButton.setVisible(false);
 //		 label.setVisible(false);
 		 label.setBackground(Color.blue);
-		 mainComponent.setLayout(null);
-		 registerComponent(mainComponent);
+		// inputPanel.setLayout(null);
+		 registerComponent(inputPanel);
 		 registerComponent(signupButton);
 		 registerComponent(label);
 		 registerComponent(emailField);
@@ -42,32 +43,35 @@ public class SignupView extends View{
 		 
 		 
 		 
-		 //mainComponent.setLayout(null);
+		 inputPanel.setLayout(null);
 		
-		 label.setBounds(0, 0, 30,10);
-		 signupButton.setBounds(0, 50, 150, 100);
-		 nameField.setBounds(150, 80, 80, 30);
-		 emailField.setBounds(150, 100, 80, 60);
-		 genderMaleRadio.setBounds(150, 130, 80, 60);
-		 passwordField.setBounds(150, 150, 80, 60);
+		 label.setBounds(50, 50, 800,20);
 		 
-		 mainComponent.add(signupButton);
-		 mainComponent.add(label);
-		 mainComponent.add(emailField);
-		 mainComponent.add(passwordField);
-		 mainComponent.add(genderMaleRadio);
-		 mainComponent.add(nameField);
-		 mainComponent.add(lastNameField);
+		 nameField.setBounds(50, 160, 600, 30);
+		 emailField.setBounds(50, 200, 600, 30);
+		 genderMaleRadio.setBounds(50, 260, 600, 30);
+		 passwordField.setBounds(50, 310, 600, 30);
+		 signupButton.setBounds(50, 360, 600, 30);
+		 
+		 inputPanel.add(signupButton);
+		 inputPanel.add(label);
+		 inputPanel.add(emailField);
+		 inputPanel.add(passwordField);
+		 inputPanel.add(genderMaleRadio);
+		 inputPanel.add(nameField);
+		 inputPanel.add(lastNameField);
+		 inputPanel.setBackground(Color.LIGHT_GRAY);
+		 mainComponent.add(inputPanel);
 		 
 		 signupButton.addActionListener(new SignUpButtonListener());
 	 }
      public JComponent build() {
-    	 return mainComponent;
+    	 return inputPanel;
      }
  
      public void show() {
     	 System.out.println("Showing signup");
-    	 mainComponent.setVisible(true);
+    	 inputPanel.setVisible(true);
     	 signupButton.setVisible(true);
     	 label.setVisible(true);
      }

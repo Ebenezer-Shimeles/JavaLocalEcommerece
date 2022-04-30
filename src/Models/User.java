@@ -9,6 +9,11 @@ public class User extends Model {
 	private char gender;
 	private String password;
 	private int age;
+	private String email;
+	
+	
+	public void setEmail(String email) {this.email = email;}
+	public String getEmail() {return this.email;}
 	
 	public void setId(int id) {this.id = id;}
 	public int getId() {return this.id;}
@@ -39,6 +44,7 @@ public class User extends Model {
     	var user = new User(
     			result.getString("name"),
     			result.getString("last_name"),
+    			result.getString("email"),
     			result.getString("gender").charAt(0),
     			result.getString("password"),
     			result.getInt("age"),
@@ -92,12 +98,13 @@ public class User extends Model {
     		    System.out.println("Error the user you requested exists");
     		    return false;
     	    }
-    	    query("Insert into users(name, last_name, gender, password, age) "
-    	    		+ "values('"+name+"', '"+lastName+"', '"+gender+"', '"+password+"', "+age+" ) ");
+    	    query("Insert into users(name, email,last_name, gender, password, age) "
+    	    		+ "values('"+name+"','"+email+"' ,'"+lastName+"', '"+gender+"', '"+password+"', "+age+" ) ");
     	    return true;
     	}
     	catch(Exception e) {
     		System.out.println("Error something went wrong when creating the user");
+    		e.printStackTrace();
     		return false;
     	}
     }
@@ -127,15 +134,17 @@ public class User extends Model {
      		System.out.println("Delete called");
      	}
     }
-    User(
+    public User(
     		String n,
     		String ln,
+    		String e,
     		char g,
     		String p,
     		int a,
     		int i
     		
     ){
+    	email = e;
     	id = i;   name =n; lastName = ln; gender=g; password = p; age =a;
     }
 }
