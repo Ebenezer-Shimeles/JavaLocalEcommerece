@@ -17,7 +17,7 @@ public class Main {
     		System.out.println(user.exists());
     		
     	
-    		
+    	//	mainWindow.setBounds(10, 10, 1000, 700);
     		mainWindow.setSize(1000, 700);
     		mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     		//mainWindow.setIconImage(icon.getImage());
@@ -31,9 +31,9 @@ public class Main {
     		
     		//mainWindow.registerView("/login", new LoginView());
     		mainWindow.setVisible(true);
-    		
-    		mainWindow.goToView("/signup");
-    		
+    		Globals.userId = "1";
+    		mainWindow.goToView("/main");
+    		//Return to signup
     	
     		//mainWindow.setIconImage(new Image(""));
     	}catch(Exception e) {

@@ -11,7 +11,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
 	
 	private String name, email, lastName, password; //add getters and setter latter
 	int age;
-	char gender;
+	char gender='M';
 	
 	
 	
@@ -131,7 +131,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	     System.out.println("IDDDDDDDD: "+ id);
         	     Globals.userId = id;
       		    try {
-	    		    Main.mainWindow.goToView("/login");
+	    		    Main.mainWindow.goToView("/main");
 	    		 }catch(Exception v) {
 	    			 v.printStackTrace();
 	    		 }
@@ -148,10 +148,10 @@ class GoToLogin implements ActionListener{
 	@Override public void actionPerformed(ActionEvent e) {
 		  try{
 			
-			 Main.mainWindow.goToView("/login");
+			 Main.mainWindow.goToView("/main");
 		  }catch(Exception v) {
-			  Main.mainWindow.showMessage("HI");
-			  v.printStackTrace();
+			  Main.mainWindow.showMessage("Error going to /main");
+			  //v.printStackTrace();
 		  }
 	}
 }

@@ -12,10 +12,15 @@ public abstract class View {
       protected JComponent[] components = new JComponent[100];
       protected int componentLen = 0;
       
- 	  protected void registerComponent(JComponent component) {
-		components[componentLen] = component;
-		componentLen++;
-		component.setVisible(false);
+ 	  protected void registerComponent(JComponent ...component) {
+//		components[componentLen] = component;
+//		componentLen++;
+//		component.setVisible(false);
+ 		 for(JComponent comp: component) {
+ 			 components[componentLen] = comp;
+ 			 componentLen++;
+ 			 comp.setVisible(false);
+ 		 }
  	  }
  	  public void clear() {
  		  for(int i=0;i<componentLen;i++) {

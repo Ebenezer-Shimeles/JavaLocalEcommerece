@@ -44,7 +44,10 @@ public class MainWindow extends JFrame{
 		
 	 }
 	 public void goToView(String viewName) throws Exception {
-		 if(!viewExists(viewName)) return;
+		 if(!viewExists(viewName)) {
+			 System.out.println("Page not found!");
+			 return; 
+			}
 		
 		 if(viewLen > 0 && currentView != null) { 
 			 System.out.println("Clearing page");
@@ -62,6 +65,7 @@ public class MainWindow extends JFrame{
 	 }
     public  MainWindow(String title){
     	 super(title);
+    	 this.setResizable(false);
     	 this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("icon.jpg")).getImage());
      }
 }
