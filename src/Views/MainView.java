@@ -24,17 +24,18 @@ public class MainView extends View{
       icon1.getImage().getScaledInstance(200, 200, 0)
 		   );
    private JLabel top = new JLabel(icon);
+   private JButton sellButton = new JButton("Sell!");
   
    public MainView(){
 	   registerComponent(logoutButton);
 	   logoutButton.setText("Logout");
-	   registerComponent(nameLabel, buy, cart, home, myObjects, top);
+	   registerComponent(nameLabel, buy, cart, home, myObjects, top,sellButton);
 	   init();
 	   
-	   JButton[] buttons = {  home, buy, cart, myObjects, logoutButton};
+	   JButton[] buttons = {  home, buy, cart, myObjects, sellButton, logoutButton};
 	   
 	   mainComponent.setLayout(null);
-	   nameLabel.setBounds(380, 250, 300, 50);
+	   nameLabel.setBounds(380, 200, 300, 50);
 	   var font = new Font(logoutButton.getFont().getName(), Font.ITALIC, logoutButton.getFont().getSize()-3);
 	   mainComponent.setBackground(Color.white);
 	   top.setBounds(0,0, 200, 200);
@@ -42,7 +43,7 @@ public class MainView extends View{
 		   JButton btn =  buttons[buttons.length - i -1 ];
 	         btn.setFont(font);
 	  
-	        btn.setBounds(870 - 100*i, 20, 100, 30);
+	        btn.setBounds(870 - 100*i , 40, 100, 30);
 	   }
 	   
 	   logoutButton.addActionListener(new ActionListener() {
@@ -55,6 +56,7 @@ public class MainView extends View{
 			   }
 		   }
 	   });
+	   mainComponent.add(sellButton);
 	   mainComponent.add(top);
 	   mainComponent.add(logoutButton);  
 	   mainComponent.add(nameLabel); 

@@ -119,6 +119,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
                age = Integer.parseInt( this.ageField.getText());
            }catch(NumberFormatException ex) {
         	   showMessage("The age is not a number");
+        	   return;
            }
 
            if(name == "" || email == "" || password == "" ) {
@@ -131,7 +132,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	     System.out.println("IDDDDDDDD: "+ id);
         	     Globals.userId = id;
       		    try {
-	    		    Main.mainWindow.goToView("/main");
+	    		    Main.mainWindow.goToView("/login");
 	    		 }catch(Exception v) {
 	    			 v.printStackTrace();
 	    		 }
