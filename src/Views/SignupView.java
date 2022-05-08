@@ -42,6 +42,9 @@ public class SignupView extends View implements ActionListener, ItemListener{
 //		 inputPanel.setVisible(false);
 //		 signupButton.setVisible(false);
 //		 label.setVisible(false);
+
+	 }
+     public JComponent build() {
 		 label.setBackground(Color.blue);
 		// inputPanel.setLayout(null);
 		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,label.getFont().getSize() + 10);
@@ -97,8 +100,6 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 inputPanel.add(girlImage);
 		 goToSignup.addActionListener(new GoToLogin());
 		 signupButton.addActionListener(this);
-	 }
-     public JComponent build() {
     	 return mainComponent;
      }
  
@@ -132,7 +133,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	     System.out.println("IDDDDDDDD: "+ id);
         	     Globals.userId = id;
       		    try {
-	    		    Main.mainWindow.goToView("/login");
+	    		    Main.mainWindow.goToView("/main");
 	    		 }catch(Exception v) {
 	    			 v.printStackTrace();
 	    		 }
@@ -149,7 +150,7 @@ class GoToLogin implements ActionListener{
 	@Override public void actionPerformed(ActionEvent e) {
 		  try{
 			
-			 Main.mainWindow.goToView("/login");
+			 Main.mainWindow.goToView("/main");
 		  }catch(Exception v) {
 			  Main.mainWindow.showMessage("Error going to /main");
 			  //v.printStackTrace();

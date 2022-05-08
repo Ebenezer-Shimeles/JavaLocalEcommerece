@@ -25,6 +25,17 @@ public class SaleObject extends Model {
     String getName() { return name;}
     String getBrand() { return brand;}
     String getDescr() { return descr;}
+    double getMoney() { return money;}
+    int getQuantity() {return quantity;}
+    
+    void setId(String i) { id=i;}
+    void setOwnerId(String oId) { ownerId=oId;}
+    void setName(String n) { name=n;}
+    void setBrand(String b) { brand=b;}
+    void setDescr(String d) {  descr=d;}
+    void setMoney(double d) { money=d;}
+    void setQuantity(int q) { quantity=q;}
+    
 
 
     SaleObject(String i, String o, String n, String b, int q, String d, double m){
@@ -40,8 +51,8 @@ public class SaleObject extends Model {
         var result = query("select top 1 * from objects where id = " + id);
         if(!result.next()) return null;
         else return new SaleObject(
-                result.getString("id"),
-                result.getString("owner"),
+                String.valueOf(result.getInt("id")),
+                String.valueOf(result.getInt("owner")),
                 result.getString("name"),
                 result.getString("brand"),
                 result.getInt("quantity"),

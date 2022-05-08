@@ -35,7 +35,7 @@ public class Main {
 			// mainWindow.registerView("/login", new LoginView());
 			mainWindow.setVisible(true);
 			Globals.userId = "1";
-			mainWindow.goToView("/main");
+			mainWindow.goToView("/signup");
 //    		var t = new Transaction();
 //    		t.setAmmount(5000);
 //    		t.setBuyer(User.findByPk("" + 1));
