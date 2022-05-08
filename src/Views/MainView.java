@@ -16,7 +16,7 @@ public class MainView extends View{
    private Icon logoutIcon = new ImageIcon("download.png");
    private JButton logoutButton = new JButton();
    private JButton buy = new JButton("Buy!");
-
+   private JButton myTrans = new JButton("My Transcations");
    private JButton cart= new JButton("My Cart");
    private JButton home= new JButton("Home ");
    private JButton myObjects = new JButton("My Objects");
@@ -30,10 +30,10 @@ public class MainView extends View{
    public MainView(){
 	   registerComponent(logoutButton);
 	   logoutButton.setText("Logout");
-	   registerComponent(nameLabel, buy, cart, home, myObjects, top,sellButton);
+	   registerComponent(nameLabel, buy, cart,  myObjects, top,sellButton, myTrans);
 	   init();
 	   
-	   JButton[] buttons = {  home, buy, cart, myObjects, sellButton, logoutButton};
+	   JButton[] buttons = {  buy, myTrans, cart, myObjects, sellButton, logoutButton,};
 	   
 	   mainComponent.setLayout(null);
 	   nameLabel.setBounds(380, 200, 300, 50);
@@ -57,13 +57,25 @@ public class MainView extends View{
 			   }
 		   }
 	   });
+	   myTrans.addActionListener(new ActionListener() {
+		   @Override
+		   public void actionPerformed(ActionEvent e) {
+			 try {
+				Main.mainWindow.goToView("/transactions");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}   
+		   }
+	   });
+	   mainComponent.add(myTrans);
 	   mainComponent.add(sellButton);
 	   mainComponent.add(top);
 	   mainComponent.add(logoutButton);  
 	   mainComponent.add(nameLabel); 
 	   mainComponent.add(buy); 
 	   mainComponent.add(cart);  
-	   mainComponent.add( home);  
+	 //  mainComponent.add( home);  
 	   mainComponent.add(myObjects);
 	   
    }
@@ -99,7 +111,7 @@ public class MainView extends View{
    	    Font nameFont = nameLabel.getFont();
    	    nameLabel.setFont(new Font(nameFont.getName(), Font.ITALIC, nameFont.getSize() + 4));
    	
-    	 Main.mainWindow.showMessage("userID: " + Globals.userId);
+    	// Main.mainWindow.showMessage("userID: " + Globals.userId);
           return mainComponent;    	
     }
    // public  void clear();
@@ -107,4 +119,15 @@ public class MainView extends View{
     public JComponent getMainComponent() {
     	return mainComponent;
     }
+}
+class GoToMyTranscation implements ActionListener{
+	@Override 
+	public void actionPerformed(ActionEvent e) {
+	      try {
+			Main.mainWindow.goToView("/transactions");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+	}
 }
