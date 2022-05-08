@@ -16,6 +16,7 @@ public class MainView extends View{
    private Icon logoutIcon = new ImageIcon("download.png");
    private JButton logoutButton = new JButton();
    private JButton buy = new JButton("Buy!");
+
    private JButton cart= new JButton("My Cart");
    private JButton home= new JButton("Home ");
    private JButton myObjects = new JButton("My Objects");

@@ -149,7 +149,7 @@ class GoToLogin implements ActionListener{
 	@Override public void actionPerformed(ActionEvent e) {
 		  try{
 			
-			 Main.mainWindow.goToView("/main");
+			 Main.mainWindow.goToView("/login");
 		  }catch(Exception v) {
 			  Main.mainWindow.showMessage("Error going to /main");
 			  //v.printStackTrace();

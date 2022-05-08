@@ -1,6 +1,7 @@
 package Main;
 
 import java.sql.*;
+import Models.*;
 import java.awt.*;
 import javax.swing.*;
 import Views.*;
@@ -33,6 +34,19 @@ public class Main {
     		mainWindow.setVisible(true);
     		Globals.userId = "1";
     		mainWindow.goToView("/main");
+//    		var t = new Transaction();
+//    		t.setAmmount(5000);
+//    		t.setBuyer(User.findByPk("" + 1));
+//    		t.setSellerId("1");
+//    		t.create();
+    		
+//    		var b = new Comments();
+//    		b.setMsg("This app is awesome");
+//    		b.setObjectId("1");
+//    		b.setWriterId("1");
+//    	    b.create();
+    //	System.out.println(Comments.getByObjectId("1")[0]);
+//    		System.out.println(Transaction.findByUserId("1")[1]);
     		//Return to signup
     	
     		//mainWindow.setIconImage(new Image(""));
