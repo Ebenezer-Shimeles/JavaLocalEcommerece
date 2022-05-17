@@ -47,6 +47,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
      public JComponent build() {
 		 label.setBackground(Color.blue);
 		// inputPanel.setLayout(null);
+		 
 		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,label.getFont().getSize() + 10);
 		 label.setFont(newLabelFont);
 		 registerComponent(inputPanel);
@@ -102,8 +103,9 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 signupButton.addActionListener(this);
     	 return mainComponent;
      }
- 
+  
      public void show() {
+    	// new JApplet();
     	 System.out.println("Showing signup");
     	 inputPanel.setVisible(true);
     	 signupButton.setVisible(true);

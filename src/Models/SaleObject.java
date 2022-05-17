@@ -10,7 +10,60 @@ public class SaleObject extends Model {
     private int quantity;
     private String descr;
     private double money;
+   
+    public static SaleObject[] of(String userId) {
+    	try {
+			var rs = query("select * from objects where owner_id = " + userId);
+			int len=0;
+			while(rs.next()) len++;
+			SaleObject[] objects = new SaleObject[len];
+			rs = query("select * from objects where owner_id = " + userId);
+		    for(int i=0;rs.next();i++) {
+		    	objects[i] = new SaleObject();
+		    	objects[i].setBrand(rs.getString("brand"));
+		    	objects[i].setDescr(rs.getString("descr"));
+		    	objects[i].setId(String.valueOf(rs.getInt("id")));
+		    	objects[i].setMoney(rs.getDouble("price"));
+		    	objects[i].setName(rs.getString("name"));
+		    	objects[i].setOwnerId(String.valueOf(rs.getInt("owner_id")));
+		    	objects[i].setQuantity(rs.getInt("quantity"));
+		    }
+		    return objects;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
     
+    public static SaleObject[] all() {
+    	try {
+			var rs = query("select * from objects where quantity > 0");
+			int len=0;
+			while(rs.next()) len++;
+			SaleObject[] objects = new SaleObject[len];
+			rs = query("select * from objects where quantity > 0");
+		    for(int i=0;rs.next();i++) {
+		    	objects[i] = new SaleObject();
+		    	objects[i].setBrand(rs.getString("brand"));
+		    	objects[i].setDescr(rs.getString("descr"));
+		    	objects[i].setId(String.valueOf(rs.getInt("id")));
+		    	objects[i].setMoney(rs.getDouble("price"));
+		    	objects[i].setName(rs.getString("name"));
+		    	objects[i].setOwnerId(String.valueOf(rs.getInt("owner_id")));
+		    	objects[i].setQuantity(rs.getInt("quantity"));
+		    }
+		    return objects;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	
+    }
+    public String toString() {
+    	return this.brand+ "=> " + this.name + " @" + this.money;
+    }
     public boolean addCommment(User user, String msg) {
     	return false;
     }
@@ -20,25 +73,25 @@ public class SaleObject extends Model {
     	else return true;
     }
 
-    String getId() { return id;}
-    String getOwnerId() { return ownerId;}
-    String getName() { return name;}
-    String getBrand() { return brand;}
-    String getDescr() { return descr;}
-    double getMoney() { return money;}
-    int getQuantity() {return quantity;}
+    public String getId() { return id;}
+    public String getOwnerId() { return ownerId;}
+    public String getName() { return name;}
+    public String getBrand() { return brand;}
+    public String getDescr() { return descr;}
+    public double getMoney() { return money;}
+    public int getQuantity() {return quantity;}
     
-    void setId(String i) { id=i;}
-    void setOwnerId(String oId) { ownerId=oId;}
-    void setName(String n) { name=n;}
-    void setBrand(String b) { brand=b;}
-    void setDescr(String d) {  descr=d;}
-    void setMoney(double d) { money=d;}
-    void setQuantity(int q) { quantity=q;}
+    public void setId(String i) { id=i;}
+    public void setOwnerId(String oId) { ownerId=oId;}
+    public void setName(String n) { name=n;}
+    public void setBrand(String b) { brand=b;}
+    public void setDescr(String d) {  descr=d;}
+    public void setMoney(double d) { money=d;}
+    public void setQuantity(int q) { quantity=q;}
     
+    public SaleObject() {}
 
-
-    SaleObject(String i, String o, String n, String b, int q, String d, double m){
+    public SaleObject(String i, String o, String n, String b, int q, String d, double m){
         id= i;
         ownerId= o;
         name = n;
@@ -71,8 +124,31 @@ public class SaleObject extends Model {
      */
 
 
-    public SaleObject[] search(String kw) {
-        return new SaleObject[10];
+    public static SaleObject[] search(String kw) {
+    	try {
+			var rs = query("select * from objects where quantity > 0 and  "
+					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' )");
+			int len=0;
+			while(rs.next()) len++;
+			SaleObject[] objects = new SaleObject[len];
+			rs = query("select * from objects where quantity > 0 and  "
+					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' )");
+		    for(int i=0;rs.next();i++) {
+		    	objects[i] = new SaleObject();
+		    	objects[i].setBrand(rs.getString("brand"));
+		    	objects[i].setDescr(rs.getString("descr"));
+		    	objects[i].setId(String.valueOf(rs.getInt("id")));
+		    	objects[i].setMoney(rs.getDouble("price"));
+		    	objects[i].setName(rs.getString("name"));
+		    	objects[i].setOwnerId(String.valueOf(rs.getInt("owner_id")));
+		    	objects[i].setQuantity(rs.getInt("quantity"));
+		    }
+		    return objects;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
     @Override
     public boolean exists(){
@@ -86,11 +162,12 @@ public class SaleObject extends Model {
     public boolean create() {
         // TODO Auto-generated method stub
         try {
-            query("INSERT into objects(owner_id,name,quantity, descr, price )"
-                    + "values('"+ownerId+"', '"+name+"', '"+quantity+"', '"+descr+"', "+money+" )");
+            query("INSERT into objects(owner_id,name,quantity, descr, price, brand )"
+                    + "values("+ownerId+", '"+name+"', "+quantity+", '"+descr+"', "+money+" ,'"+brand+"' )");
             return true;
         }catch(SQLException e) {
             System.out.print("Unable to register object");
+            e.printStackTrace();
             return false;
         }
     }

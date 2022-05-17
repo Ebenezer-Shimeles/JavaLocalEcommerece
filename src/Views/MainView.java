@@ -9,6 +9,9 @@ import java.sql.*;
 import java.awt.event.*;
 
 public class MainView extends View{
+   private String searchTerm = "";
+   private JTextField searchInput = new JTextField("Search for anything to buy...");
+   private JButton searchButton =  new JButton("Search");
    private String name;
    private String lastName;
    private JLabel nameLabel = new JLabel();
@@ -30,13 +33,60 @@ public class MainView extends View{
    public MainView(){
 	   registerComponent(logoutButton);
 	   logoutButton.setText("Logout");
-	   registerComponent(nameLabel, buy, cart,  myObjects, top,sellButton, myTrans);
+	   registerComponent(nameLabel, buy, cart,  myObjects, top,sellButton, myTrans,  searchButton, searchInput);
 	   init();
-	   
+	   buy.addActionListener(new ActionListener() {
+		   public void actionPerformed(ActionEvent e) {
+			   try {
+				Main.mainWindow.goToView("/browse");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		   }
+	   });
 	   JButton[] buttons = {  buy, myTrans, cart, myObjects, sellButton, logoutButton,};
-	   
+	   searchButton.addActionListener(new ActionListener() {
+		   public void actionPerformed(ActionEvent e) {
+			   Globals.searchTerm = searchInput.getText();
+			   try {
+				Main.mainWindow.goToView("/browse");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		   }
+	   });
+	   myObjects.addActionListener(new ActionListener() {
+		   public void actionPerformed(ActionEvent e) {
+			   try {
+				Main.mainWindow.goToView("/myobjs");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		   }
+	   });
+	   searchInput.addFocusListener(new FocusListener() {
+		    @Override
+		    public void focusGained(FocusEvent e) {
+		        if (searchInput.getText().equals("Search for anything to buy...")) {
+		            searchInput.setText("");
+		            searchInput.setForeground(Color.BLACK);
+		        }
+		    }
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        if (searchInput.getText().isEmpty()) {
+		            searchInput.setForeground(Color.GRAY);
+		            searchInput.setText("Search for anything to buy...");
+		        }
+		    }
+		    });
 	   mainComponent.setLayout(null);
-	   nameLabel.setBounds(380, 200, 300, 50);
+	   searchInput.setBounds(380, 300, 300, 30);
+	   searchButton.setBounds(700, 300, 150, 30);
+	   nameLabel.setBounds(380, 200, 600, 50);
 	   var font = new Font(logoutButton.getFont().getName(), Font.ITALIC, logoutButton.getFont().getSize()-3);
 	   mainComponent.setBackground(Color.white);
 	   top.setBounds(0,0, 200, 200);
@@ -47,6 +97,17 @@ public class MainView extends View{
 	        btn.setBounds(870 - 100*i , 40, 100, 30);
 	   }
 	   
+	   sellButton.addActionListener(new ActionListener() {
+	                  @Override
+	                  public void actionPerformed(ActionEvent n) {
+	                	  try {
+							Main.mainWindow.goToView("/sell");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	                  }
+	   });
 	   logoutButton.addActionListener(new ActionListener() {
 		   public void actionPerformed(ActionEvent n) {
 			   Globals.userId = "";
@@ -68,6 +129,8 @@ public class MainView extends View{
 			}   
 		   }
 	   });
+	   mainComponent.add(searchButton);
+	   mainComponent.add(searchInput);
 	   mainComponent.add(myTrans);
 	   mainComponent.add(sellButton);
 	   mainComponent.add(top);

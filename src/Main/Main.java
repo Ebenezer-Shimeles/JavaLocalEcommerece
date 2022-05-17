@@ -7,6 +7,7 @@ import javax.swing.*;
 import Views.*;
 
 import Models.User;
+import Models.SaleObject; 
 
 public class Main {
 	public static MainWindow mainWindow = new MainWindow("Gebeya Ecommerece");
@@ -15,10 +16,12 @@ public class Main {
 		try {
 			// String iconLocation =
 			// "C:\\Users\\natan\\eclipse-workspace\\Ecommerece\\src\\Views\\icon.jpg";
-			var user = new User("Ebenezer", "Shimeles", "eye@yahoo.com", 'M', "muze", 20, 7);
-
-			System.out.println(user.exists());
-
+//			var user = new User("Ebenezer", "Shimeles", "eye@yahoo.com", 'M', "muze", 20, 7);
+//   
+//			System.out.println(user.exists());
+//            for(SaleObject obj: SaleObject.search("nu")) {
+//            	System.out.println(obj);
+//            }
 			// mainWindow.setBounds(10, 10, 1000, 700);
 			mainWindow.setSize(1000, 700);
 			mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -30,12 +33,15 @@ public class Main {
 			mainWindow.registerView("/signup", new SignupView());
 			mainWindow.registerView("/main", new MainView());
 			mainWindow.registerView("/transactions", new MyTransView());
+			mainWindow.registerView("/sell", new SellView());
+			mainWindow.registerView("/browse", new BrowseObjectsView());
+			mainWindow.registerView("/myobjs", new MyObjectsView());
 			// mainWindow.setLayout(new FlowLayout());
 
 			// mainWindow.registerView("/login", new LoginView());
 			mainWindow.setVisible(true);
 			Globals.userId = "1";
-			mainWindow.goToView("/signup");
+			mainWindow.goToView("/main");
 //    		var t = new Transaction();
 //    		t.setAmmount(5000);
 //    		t.setBuyer(User.findByPk("" + 1));
