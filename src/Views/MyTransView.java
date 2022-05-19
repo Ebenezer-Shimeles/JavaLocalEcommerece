@@ -48,8 +48,9 @@ public class MyTransView extends View implements ActionListener{
 		    		 
 		    );
 		     main.add(new JLabel("Your transactions"), BorderLayout.NORTH);
+		     transDesc.setText("");
 		     for(Transaction t: transactions) {
-		    	
+		    	 
 		    	 transDesc.append(""+ t.toString()+"\n");
 		    	 
 		     }

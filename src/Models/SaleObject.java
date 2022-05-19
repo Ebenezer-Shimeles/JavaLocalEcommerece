@@ -100,12 +100,12 @@ public class SaleObject extends Model {
         descr = d;
         money = m;
     }
-    static SaleObject findById(String id) throws SQLException {
+    public static SaleObject findById(String id) throws SQLException {
         var result = query("select top 1 * from objects where id = " + id);
         if(!result.next()) return null;
         else return new SaleObject(
                 String.valueOf(result.getInt("id")),
-                String.valueOf(result.getInt("owner")),
+                String.valueOf(result.getInt("owner_id")),
                 result.getString("name"),
                 result.getString("brand"),
                 result.getInt("quantity"),
@@ -179,6 +179,7 @@ public class SaleObject extends Model {
             query("delete from objects where id = " + id);
             return true;
         }catch(SQLException e) {
+        	e.printStackTrace();
             System.out.print("Unable to delete object");
             return false;
         }
@@ -188,13 +189,16 @@ public class SaleObject extends Model {
     @Override
     public boolean update() {
         try {
-            query("update objects set owner_id = '"+ownerId+"' name = '"+name+"'  quantity = '"+quantity+"' descr = '"+descr+"' price = "+money+" ");
+            query("update objects set owner_id = "+ownerId+" ,name = '"+name+"' , quantity = "+quantity+" ,descr = '"+descr+"' ,price = "+money+" "
+            		+ " where id = " + id);
             return true;
         }catch(SQLException e) {
             System.out.print("Unable to update object");
             return false;
         }
     }
+    
+    
 
     @Override
     public boolean refresh() {

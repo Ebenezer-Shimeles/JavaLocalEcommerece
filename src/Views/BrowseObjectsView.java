@@ -1,7 +1,11 @@
 package Views;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.*;
+import Interactors.SaleObjectInteractor;
 
 import javax.swing.*;
 import Models.SaleObject;
@@ -17,9 +21,10 @@ public class BrowseObjectsView extends View{
     
 	@Override
 	public JComponent build() {
+		
 		mainComponent.setLayout(new BorderLayout());
 		mainComponent.setBackground(Color.white);
-		registerComponent(title, objScroll, backButton, pane);
+		registerComponent(title, objScroll, backButton, pane, mainComponent);
 		SaleObject[] objs;
 	    pane.setLayout(new BorderLayout());
 //		objScroll.add(pane);
@@ -41,14 +46,31 @@ public class BrowseObjectsView extends View{
 			var row = new JPanel();
 			row.setLayout(new BorderLayout());
 			var label = new JLabel(""+ obj);
-			var button = new JButton("Buy");
-
+			var button = new JButton("Buy $$");
+            
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						SaleObjectInteractor.buyObject(obj.getId(), obj.getOwnerId(), Main.Globals.userId);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						//  Main.Main.mainWindow.clear();
+						  Main.Main.mainWindow.showMessage("Can not buy!");
+						e1.printStackTrace();
+					}
+					finally {
+					    Main.Main.mainWindow.showMessage("You have bougt it!!");
+					}		
+					}
+			});
+			
 			row.add(button, BorderLayout.EAST);
 			row.add(label);
 			var cons = new GridBagConstraints();
 			cons.gridx = 0;
 			cons.gridy = i* 20;
 			l.setConstraints(row, cons);
+		//	registerComponent(row);
 			pane.add(row);
 			
 			//pane.setBackground(Color.BLACK);
@@ -56,6 +78,21 @@ public class BrowseObjectsView extends View{
 		}
 		mainComponent.add(title, BorderLayout.NORTH);
 		mainComponent.add(objScroll);
+		mainComponent.add(backButton, BorderLayout.SOUTH);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					backButton.setVisible(false);
+					mainComponent.setVisible(false);
+					//Main.Main.mainWindow.clear();
+					Main.Main.mainWindow.goToView("/main");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		System.out.print("Build compolete");
 		return mainComponent;
 	}
 

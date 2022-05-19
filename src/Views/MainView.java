@@ -41,6 +41,7 @@ public class MainView extends View{
 				Main.mainWindow.goToView("/browse");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
+				System.out.print(e1);
 				e1.printStackTrace();
 			}
 		   }

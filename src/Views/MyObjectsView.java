@@ -1,5 +1,6 @@
 package Views;
 
+import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -17,20 +18,22 @@ import Models.SaleObject;
 public class MyObjectsView extends View{
 	 private JPanel mainComponent = new JPanel();
 	    private JLabel title = new JLabel("Objects For Sale");
-	  
+	   
 	    private JPanel pane = new JPanel();
 	    private JScrollPane objScroll = new JScrollPane(pane);
 	    private JButton backButton = new JButton("Back to main menu");
 	    
 		@Override
 		public JComponent build() {
+			
 			mainComponent.setLayout(new BorderLayout());
 			mainComponent.setBackground(Color.white);
-			registerComponent(title, objScroll, backButton, pane);
+			
+			registerComponent(title, objScroll, backButton, mainComponent);
 			SaleObject[] objs = SaleObject.of(Globals.userId);
 		    pane.setLayout(new BorderLayout());
 //			objScroll.add(pane);
-
+           
 		//	title.setBounds(500, 
 			var l = new GridBagLayout();
 			pane.setLayout(l);
@@ -43,20 +46,44 @@ public class MyObjectsView extends View{
 				row.setLayout(new BorderLayout());
 				var label = new JLabel(""+ obj);
 				var button = new JButton("Delete");
-
-				row.add(button, BorderLayout.EAST);
+                
+				button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						obj.delete();
+						try {
+							Main.Main.mainWindow.goToView("/main");
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
+		       	row.add(button, BorderLayout.EAST);
 				row.add(label);
 				var cons = new GridBagConstraints();
 				cons.gridx = 0;
 				cons.gridy = i* 20;
 				l.setConstraints(row, cons);
 				pane.add(row);
-				
+				//registerComponent(row);
 				//pane.setBackground(Color.BLACK);
 				System.out.print("Loop=> " + obj);
 			}
+			mainComponent.add(backButton, BorderLayout.SOUTH);
+			backButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+					//	Main.Main.mainWindow.clear();
+						Main.Main.mainWindow.goToView("/main");
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 			mainComponent.add(title, BorderLayout.NORTH);
 			mainComponent.add(objScroll);
+			
 			return mainComponent;
 		}
 
@@ -64,7 +91,12 @@ public class MyObjectsView extends View{
 		public void show() {
 			// TODO Auto-generated method stu
 		}
-
+        @Override public void clear() {
+        	  
+        	 objScroll.removeAll();
+        	 objScroll.repaint();
+        	 super.clear();
+        }
 		@Override
 		public JComponent getMainComponent() {
 			// TODO Auto-generated method stub

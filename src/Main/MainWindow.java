@@ -10,6 +10,11 @@ public class MainWindow extends JFrame{
 	 private int viewLen = 0;
 	 private boolean first = true;
 	 
+	 public void clear() {
+		 if(currentView == null) return;
+		 this.currentView.clear();
+		 this.currentView.getMainComponent().setVisible(false);
+	 }
 	 public void showMessage(String msg) {
 		 if(currentView!= null) currentView.showMessage(msg);
 	 }
@@ -44,9 +49,11 @@ public class MainWindow extends JFrame{
 		
 	 }
 	 public void goToView(String viewName) throws Exception {
+		// if(currentView !=null) this.clear();
 		 if(!viewExists(viewName)) {
 			 System.out.println("Page not found!");
-			 return; 
+			 throw new Exception("Page not found!");
+			 
 			}
 		
 		 if(viewLen > 0 && currentView != null) { 
@@ -58,8 +65,9 @@ public class MainWindow extends JFrame{
 		 if(indexOfView == -1) throw new Exception("Page does not exist");
 		 
 	     this.add( views[indexOfView].build());
+	     System.out.println("Added Page");
 		 currentView = views[indexOfView];
-		 currentView.show();
+	//	 currentView.show();
 		 currentView.init();
 		 first = false;
 	 }

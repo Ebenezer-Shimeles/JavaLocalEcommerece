@@ -23,9 +23,11 @@ public abstract class View {
  		 }
  	  }
  	  public void clear() {
+ 		  
  		  for(int i=0;i<componentLen;i++) {
+ 			  
  			  if(components[i] == null) continue;
- 			  components[i].setVisible(false); 
+ 			 components[i].setVisible(false); 
  			  //getMainComponent().remove( components[i]);
  			 }
  	  }
