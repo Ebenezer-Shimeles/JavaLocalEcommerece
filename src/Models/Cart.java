@@ -8,7 +8,7 @@ public class Cart extends Model{
    /*
     * create table cart(id int primary key identity, obj_id int foreign key references objects(id) not null, 
                   owner_id int foreign key references users(id) not null);*/
-	Cart(String uId) {this.userId = uId;}
+	public Cart(String uId) {this.userId = uId;}
 	
 //	public static Cart findByUserId(String userId) {
 //		return null;

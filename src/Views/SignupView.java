@@ -135,7 +135,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	     System.out.println("IDDDDDDDD: "+ id);
         	     Globals.userId = id;
       		    try {
-	    		    Main.mainWindow.goToView("/main");
+	    		    Main.mainWindow.goToView("/login");
 	    		 }catch(Exception v) {
 	    			 v.printStackTrace();
 	    		 }
@@ -152,7 +152,7 @@ class GoToLogin implements ActionListener{
 	@Override public void actionPerformed(ActionEvent e) {
 		  try{
 			
-			 Main.mainWindow.goToView("/main");
+			 Main.mainWindow.goToView("/login");
 		  }catch(Exception v) {
 			  Main.mainWindow.showMessage("Error going to /main");
 			  //v.printStackTrace();

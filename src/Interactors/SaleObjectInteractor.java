@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import Models.Transaction;
 import Models.User;
 import Main.Globals;
-
+import Models.Cart;
 public class SaleObjectInteractor {
 	public static void buyObject(String objId, String sellerId, String buyerId) throws SQLException {
 		var obj = SaleObject.findById(objId);
@@ -22,6 +22,21 @@ public class SaleObjectInteractor {
 	    t.setSellerId(sellerId);
 	    
 	    t.create();
+	}
+	public static void addToCart(String objectId, String userId) throws SQLException{
+		var obj = SaleObject.findById(objectId);
+		if(obj == null) {
+			Main.Main.mainWindow.showMessage("Something went wrong!");
+			return;
+		}
+		if(obj.getQuantity() <=0 ) {
+			Main.Main.mainWindow.showMessage("Object is sold out!");
+			return;
+		}
+		var cart = new Cart(userId);
+		cart.addObject(obj);
+		Main.Main.mainWindow.showMessage("Added!");
+		
 	}
     public static void addSaleObject(
     		String ownerId,

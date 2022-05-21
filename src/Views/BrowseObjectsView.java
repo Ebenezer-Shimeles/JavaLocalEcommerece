@@ -18,7 +18,7 @@ public class BrowseObjectsView extends View{
     private JPanel pane = new JPanel();
     private JScrollPane objScroll = new JScrollPane(pane);
     private JButton backButton = new JButton("Back to main menu");
-    
+   
 	@Override
 	public JComponent build() {
 		
@@ -47,7 +47,20 @@ public class BrowseObjectsView extends View{
 			row.setLayout(new BorderLayout());
 			var label = new JLabel(""+ obj);
 			var button = new JButton("Buy $$");
+            var cartButton = new JButton("Add To Cart");
             
+            cartButton.addActionListener(new ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		try {
+						SaleObjectInteractor.addToCart(obj.getId(), Main.Globals.userId);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						showMessage("Error couldn't add to cart");
+						e1.printStackTrace();
+					}
+            	}
+            });
+			
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
@@ -66,9 +79,11 @@ public class BrowseObjectsView extends View{
 			
 			row.add(button, BorderLayout.EAST);
 			row.add(label);
+			row.add(cartButton, BorderLayout.WEST);
 			var cons = new GridBagConstraints();
 			cons.gridx = 0;
 			cons.gridy = i* 20;
+			
 			l.setConstraints(row, cons);
 		//	registerComponent(row);
 			pane.add(row);
