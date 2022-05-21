@@ -96,7 +96,13 @@ public class Transaction extends Model{
 	}
     @Override 
     public String toString() {
-    	return "From: " + this.buyerId + " to "+ this.sellerId + " Ammount" + ammount;
+    	try {
+			return "From: " + User.findByPk(this.buyerId).getEmail() + " to "+ User.findByPk(this.sellerId).getEmail() + " Ammount" + ammount;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
     
 	

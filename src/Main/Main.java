@@ -28,7 +28,8 @@ public class Main {
 			// mainWindow.setIconImage(icon.getImage());
 			mainWindow.setBackground(Color.white);
 			mainWindow.getContentPane().setBackground(Color.white);
-
+            
+			mainWindow.registerView("/writecomment", new WriteCommentView());
 			mainWindow.registerView("/login", new LoginView());
 			mainWindow.registerView("/signup", new SignupView());
 			mainWindow.registerView("/main", new MainView());
@@ -36,6 +37,9 @@ public class Main {
 			mainWindow.registerView("/sell", new SellView());
 			mainWindow.registerView("/browse", new BrowseObjectsView());
 			mainWindow.registerView("/myobjs", new MyObjectsView());
+			mainWindow.registerView("/mycart", new MyCartView());
+			mainWindow.registerView("/seecomments", new CommentsView());
+			mainWindow.registerView("/myacc", new MyAccountView());
 			// mainWindow.setLayout(new FlowLayout());
 
 			// mainWindow.registerView("/login", new LoginView());

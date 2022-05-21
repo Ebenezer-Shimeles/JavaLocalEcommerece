@@ -23,6 +23,8 @@ public class MainView extends View{
    private JButton cart= new JButton("My Cart");
    private JButton home= new JButton("Home ");
    private JButton myObjects = new JButton("My Objects");
+   private JButton myAccount = new JButton("My Account");
+   private JLabel ammount = new JLabel("");
    private ImageIcon icon1 = new ImageIcon(getClass().getClassLoader().getResource("icon.jpg"));
    private ImageIcon icon = new ImageIcon(
       icon1.getImage().getScaledInstance(200, 200, 0)
@@ -33,7 +35,7 @@ public class MainView extends View{
    public MainView(){
 	   registerComponent(logoutButton);
 	   logoutButton.setText("Logout");
-	   registerComponent(nameLabel, buy, cart,  myObjects, top,sellButton, myTrans,  searchButton, searchInput);
+	   registerComponent(nameLabel, buy, cart, ammount,myAccount,  myObjects, top,sellButton, myTrans,  searchButton, searchInput);
 	   init();
 	   buy.addActionListener(new ActionListener() {
 		   public void actionPerformed(ActionEvent e) {
@@ -46,7 +48,33 @@ public class MainView extends View{
 			}
 		   }
 	   });
-	   JButton[] buttons = {  buy, myTrans, cart, myObjects, sellButton, logoutButton,};
+	   JButton[] buttons = {  buy, myTrans, cart, myObjects, sellButton, myAccount, logoutButton};
+	   myAccount.addActionListener(new ActionListener() {
+		   public void actionPerformed(ActionEvent e) {
+				
+			   try {
+				Main.mainWindow.goToView("/myacc");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				System.out.print(e1);
+				e1.printStackTrace();
+			}
+		   
+	   }
+   });
+	   cart.addActionListener(new ActionListener() {
+		   public void actionPerformed(ActionEvent e) {
+			
+				   try {
+					Main.mainWindow.goToView("/mycart");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.print(e1);
+					e1.printStackTrace();
+				}
+			   
+		   }
+	   });
 	   searchButton.addActionListener(new ActionListener() {
 		   public void actionPerformed(ActionEvent e) {
 			   Globals.searchTerm = searchInput.getText();
@@ -88,6 +116,7 @@ public class MainView extends View{
 	   searchInput.setBounds(380, 300, 300, 30);
 	   searchButton.setBounds(700, 300, 150, 30);
 	   nameLabel.setBounds(380, 200, 600, 50);
+	   ammount.setBounds(800, 170, 90, 40);
 	   var font = new Font(logoutButton.getFont().getName(), Font.ITALIC, logoutButton.getFont().getSize()-3);
 	   mainComponent.setBackground(Color.white);
 	   top.setBounds(0,0, 200, 200);
@@ -134,11 +163,13 @@ public class MainView extends View{
 	   mainComponent.add(searchInput);
 	   mainComponent.add(myTrans);
 	   mainComponent.add(sellButton);
+	   mainComponent.add(myAccount);
 	   mainComponent.add(top);
 	   mainComponent.add(logoutButton);  
 	   mainComponent.add(nameLabel); 
 	   mainComponent.add(buy); 
 	   mainComponent.add(cart);  
+	   mainComponent.add(ammount);
 	 //  mainComponent.add( home);  
 	   mainComponent.add(myObjects);
 	   
@@ -165,6 +196,9 @@ public class MainView extends View{
    			 }
    		  }
    		  else {
+   			//  user.deposit(1000);
+   			//  System.out.print(user.canBuy(1));
+   			  ammount.setText("$ " + user.getBalance() + "");
    			  name = user.getName();
    			  lastName = user.getLastName();
    		  }

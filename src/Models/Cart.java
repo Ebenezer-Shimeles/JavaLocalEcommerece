@@ -27,7 +27,7 @@ public class Cart extends Model{
 	}
 	public boolean removeObject(SaleObject obj) {
 		try {	 
-			query("delete from  cart where   obj_id = '"+obj.getId()+"' AND owner_id = '"+this.userId+"' )");
+			query("delete from  cart where   obj_id = "+obj.getId()+" AND owner_id = "+this.userId+" ");
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -39,7 +39,22 @@ public class Cart extends Model{
 		return User.findByPk(this.userId);
 	}
 	public SaleObject[] getSaleObjects() {
-		return null;
+		try {	 
+			ResultSet x = query("select * from  cart where  owner_id = "+this.userId);
+			int len=0;
+			while(x.next()) len++;
+			 SaleObject[] objects= new SaleObject[len];
+			 x = query("select * from  cart where  owner_id = "+this.userId);
+
+			for(int j=0; x.next(); j++) {
+				objects[j] = SaleObject.findById(String.valueOf( x.getInt("obj_id")));
+			}
+			System.out.println("Len: " + len);
+			return objects;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	

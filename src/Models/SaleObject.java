@@ -10,7 +10,7 @@ public class SaleObject extends Model {
     private int quantity;
     private String descr;
     private double money;
-   
+   private int cata;
     public static SaleObject[] of(String userId) {
     	try {
 			var rs = query("select * from objects where owner_id = " + userId);
@@ -52,6 +52,7 @@ public class SaleObject extends Model {
 		    	objects[i].setName(rs.getString("name"));
 		    	objects[i].setOwnerId(String.valueOf(rs.getInt("owner_id")));
 		    	objects[i].setQuantity(rs.getInt("quantity"));
+		    	objects[i].setCata(rs.getInt("cata"));
 		    }
 		    return objects;
 		} catch (SQLException e) {
@@ -89,6 +90,9 @@ public class SaleObject extends Model {
     public void setMoney(double d) { money=d;}
     public void setQuantity(int q) { quantity=q;}
     
+    public int getCata() {return cata;}
+    public void setCata(int c) {cata=c;}
+   // public void setId(String i) { id=i;}
     public SaleObject() {}
 
     public SaleObject(String i, String o, String n, String b, int q, String d, double m){
@@ -103,7 +107,7 @@ public class SaleObject extends Model {
     public static SaleObject findById(String id) throws SQLException {
         var result = query("select top 1 * from objects where id = " + id);
         if(!result.next()) return null;
-        else return new SaleObject(
+        else { var obj = new SaleObject(
                 String.valueOf(result.getInt("id")),
                 String.valueOf(result.getInt("owner_id")),
                 result.getString("name"),
@@ -112,6 +116,9 @@ public class SaleObject extends Model {
                 result.getString("descr"),
                 result.getDouble("price")
         );
+        obj.setCata((result.getInt("cata")));
+        return obj;
+        }
     }
 
     /**
@@ -142,6 +149,7 @@ public class SaleObject extends Model {
 		    	objects[i].setName(rs.getString("name"));
 		    	objects[i].setOwnerId(String.valueOf(rs.getInt("owner_id")));
 		    	objects[i].setQuantity(rs.getInt("quantity"));
+		    	objects[i].setCata(rs.getInt("cata"));
 		    }
 		    return objects;
 		} catch (SQLException e) {
@@ -162,8 +170,8 @@ public class SaleObject extends Model {
     public boolean create() {
         // TODO Auto-generated method stub
         try {
-            query("INSERT into objects(owner_id,name,quantity, descr, price, brand )"
-                    + "values("+ownerId+", '"+name+"', "+quantity+", '"+descr+"', "+money+" ,'"+brand+"' )");
+            query("INSERT into objects(owner_id,name,quantity, descr, price, brand , cata)"
+                    + "values("+ownerId+", '"+name+"', "+quantity+", '"+descr+"', "+money+" ,'"+brand+"', "+cata+" )");
             return true;
         }catch(SQLException e) {
             System.out.print("Unable to register object");
@@ -189,7 +197,7 @@ public class SaleObject extends Model {
     @Override
     public boolean update() {
         try {
-            query("update objects set owner_id = "+ownerId+" ,name = '"+name+"' , quantity = "+quantity+" ,descr = '"+descr+"' ,price = "+money+" "
+            query("update objects set owner_id = "+ownerId+" cata = "+cata+", ,name = '"+name+"' , quantity = "+quantity+" ,descr = '"+descr+"' ,price = "+money+" "
             		+ " where id = " + id);
             return true;
         }catch(SQLException e) {

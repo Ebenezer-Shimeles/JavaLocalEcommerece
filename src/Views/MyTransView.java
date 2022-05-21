@@ -23,6 +23,7 @@ public class MyTransView extends View implements ActionListener{
 	@Override
 	public JComponent build() {
 		// TODO Auto-generated method stub
+		transDesc.setText("TRANSCATIONS: ");
 		main.setBackground(Color.white);
 		 User user;
 		   try{

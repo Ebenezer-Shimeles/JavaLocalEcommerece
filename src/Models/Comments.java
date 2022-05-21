@@ -1,6 +1,7 @@
 package Models;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /*create table comments(id int primary key identity, msg varchar(200) not null, from_user int foreign key references users(id), 
                       forobject int foreign key references objects(id)); */
@@ -20,21 +21,28 @@ public class Comments extends Model{
     	objectId = o;
     }
     @Override public String toString() {
-    	return  this.msg;
+    	try {
+			return "From: "+ User.findByPk(this.writerId).getEmail() + " " + this.msg;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
     
    public static Comments[] getByObjectId(String objectId) {
 		try {
-			ResultSet r = query("select * from comments where (from_user = "+objectId+") ");
+			ResultSet r = query("select * from comments where (forobject = "+objectId+") ");
 			int len = 0;
 			while(r.next()) len++;
 			
 			Comments t[] = new Comments[len];
-			 r = query("select * from comments where (from_user = "+objectId+") ");
+			 r = query("select * from comments where (forobject = "+objectId+") ");
 			 for(int i = 0;r.next();i++) {
 				 t[i] = new Comments();
+				 
 				 t[i].setMsg(r.getString("msg"));
-				 t[i].setObjectId(String.valueOf(r.getInt("from_user")));
+				 t[i].setWriterId(String.valueOf(r.getInt("from_user")));
 				 t[i].setObjectId(String.valueOf(r.getInt("forobject")));
 				 
 //				 t[i].setAmmount(r.getDouble("ammount"));

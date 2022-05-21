@@ -9,11 +9,20 @@ import Main.Globals;
 import Models.Cart;
 public class SaleObjectInteractor {
 	public static void buyObject(String objId, String sellerId, String buyerId) throws SQLException {
+		var user = User.findByPk(Globals.userId);
 		var obj = SaleObject.findById(objId);
+		if(!user.canBuy(obj.getMoney())) {
+			Main.Main.mainWindow.showMessage("It seems you don't have enough balance please recharge :(");
+			return;
+		}
+		
 		if(obj.getQuantity() <=0 ) {
 			Main.Main.mainWindow.showMessage("Object is sold out!");
 			return;
 		}
+		var seller = User.findByPk(sellerId);
+		user.deposit(-obj.getQuantity());
+		seller.deposit(obj.getQuantity());
 		obj.setQuantity(obj.getQuantity() - 1);
 		obj.update();
 	    var t = new Transaction();
@@ -38,17 +47,23 @@ public class SaleObjectInteractor {
 		Main.Main.mainWindow.showMessage("Added!");
 		
 	}
+	public static void removeFromCart(String objectId, String userId) throws SQLException {
+		var cart = new Cart(userId);
+        cart.removeObject(SaleObject.findById(objectId));
+	}
     public static void addSaleObject(
     		String ownerId,
     		String name,
     		String brand,
     		int quantity,
     		String descr,
-    		double money
+    		double money,
+    		int cata
     
     		) {
     	
           var so = new SaleObject();
+          so.setCata(cata);
           so.setBrand(brand);
           so.setDescr(descr);
           so.setMoney(money);

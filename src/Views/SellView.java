@@ -14,7 +14,12 @@ public class SellView extends View implements ActionListener{
 	    	desc = descrF.getText();
 	    	money = Double.parseDouble(moneyF.getText());
 	    	quantity = Integer.parseInt(quantityF.getText());
-	    	SaleObjectInteractor.addSaleObject(Globals.userId, name, brand, quantity, desc, money);
+	    	int cata = cataBox.getSelectedIndex();
+	    	SaleObjectInteractor.addSaleObject(Globals.userId, name, brand, quantity, desc, money, cata + 1);
+	    	
+	    	
+	    	
+	    
 	    	Main.Main.mainWindow.goToView("/main");
 	    }catch(NumberFormatException ex) {
 	    	showMessage("Invalid number format");
@@ -39,17 +44,21 @@ public class SellView extends View implements ActionListener{
 	private double money = 0;
 	private int quantity = 0;
 	
+	private String[] catas = {"Shoes and Cloth", "Beuty and cosmotics", "Electronics", "Furniture", "Custom made","Other"};
 	
+	private JLabel cataLabel = new JLabel("Catagory");
+	private JComboBox cataBox =  new JComboBox(catas);
 	private JPanel main = new JPanel();
 	private JLabel title = new JLabel("Sell Object");
 	private JTextField nameF = new JTextField("Name");
 	private JTextField brandF = new JTextField("Brand");
 	private JLabel descT = new JLabel("Description: ");
-	private JTextArea descrF = new JTextArea(5, 5);
+	private JTextArea descrF = new JTextArea("Description....", 5, 5);
 	private JTextField moneyF = new JTextField("Cost");
 	private JTextField quantityF = new JTextField("Quantity");
 	private JButton sendButton = new JButton("Send!  ");
 	private JButton backButton = new JButton("Back to home");
+	
 	
 	public SellView(){
 		main.setLayout(null);
@@ -60,9 +69,9 @@ public class SellView extends View implements ActionListener{
 	
 	@Override
 	public JComponent build() {
-		registerComponent(main, nameF, brandF, descT, descrF, moneyF, quantityF, sendButton, 
+		registerComponent(main, nameF, brandF, descT, descrF, moneyF, quantityF, sendButton, cataLabel, cataBox,
 				backButton, title);
-		JComponent [] comps = {  title, nameF, brandF,descT,  descrF, moneyF, quantityF, sendButton, 
+		JComponent [] comps = {  title, nameF, brandF,descT,  descrF, moneyF, quantityF, cataLabel, cataBox, sendButton,
 				backButton};
 	    for(int i=0;i<comps.length;i++) {
 	    	comps[i].setBounds(300, 10 + 40 * i, 300, 30);

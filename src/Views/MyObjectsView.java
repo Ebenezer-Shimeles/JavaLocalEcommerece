@@ -3,6 +3,7 @@ package Views;
 import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -25,7 +26,7 @@ public class MyObjectsView extends View{
 	    
 		@Override
 		public JComponent build() {
-			
+			pane.removeAll();
 			mainComponent.setLayout(new BorderLayout());
 			mainComponent.setBackground(Color.white);
 			
@@ -43,7 +44,7 @@ public class MyObjectsView extends View{
 				//objScroll.add(new JLabel("" + obj));
 			
 				var row = new JPanel();
-				row.setLayout(new BorderLayout());
+				row.setLayout(new FlowLayout());
 				var label = new JLabel(""+ obj);
 				var button = new JButton("Delete");
                 
@@ -58,8 +59,9 @@ public class MyObjectsView extends View{
 						}
 					}
 				});
-		       	row.add(button, BorderLayout.EAST);
+		     
 				row.add(label);
+			  	row.add(button);
 				var cons = new GridBagConstraints();
 				cons.gridx = 0;
 				cons.gridy = i* 20;
@@ -93,8 +95,7 @@ public class MyObjectsView extends View{
 		}
         @Override public void clear() {
         	  
-        	 objScroll.removeAll();
-        	 objScroll.repaint();
+        	
         	 super.clear();
         }
 		@Override

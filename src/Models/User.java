@@ -10,6 +10,7 @@ public class User extends Model {
 	private String password;
 	private int age;
 	private String email;
+	private double balance;
 	
 	
 	public void setEmail(String email) {this.email = email;}
@@ -33,6 +34,9 @@ public class User extends Model {
 	public void setAge(int age) {this.age = age;}
 	public int getAge() {return this.age;}
 	
+	public void setBalance(double b) {this.balance = b;}
+	public double getBalance() {return this.balance;}
+	
 	public void print() {
 	   System.out.println(
 			   id + " " + name + " " +lastName+ " " + gender+ " " + password + " " + age + " ");
@@ -50,6 +54,7 @@ public class User extends Model {
     			result.getInt("age"),
     			result.getInt("id")
     	);
+    	user.setBalance(result.getDouble("balance"));
     	System.out.print("Found user     ");
     	user.print();
     	return user;
@@ -67,6 +72,7 @@ public class User extends Model {
     			result.getInt("age"),
     			result.getInt("id")
     	);
+    	user.setBalance(result.getDouble("balance"));
     	System.out.print("Found user     ");
     	user.print();
     	return user;
@@ -94,6 +100,7 @@ public class User extends Model {
     		this.password = user.getPassword();
     		this.id= user.getId();
     		this.lastName = user.getLastName();
+    		this.balance = user.getBalance();
     		return true;
     	}
     	catch(Exception e) {
@@ -104,9 +111,9 @@ public class User extends Model {
     }
     public boolean update() {
     	try {
-    		query("update users set name = '"+name+"' last_name = '"+lastName+"' "
-    				+ "gender = '"+gender+"' password = '"+password+"' "
-    				+ " age = "+age+"id = "+ id);
+    		query("update users set name = '"+name+"', last_name = '"+lastName+"' ,"
+    				+ "gender = '"+gender+"', password = '"+password+"' , balance = " + balance
+    				+ ", age = "+age+ " where id = "+ id);
     		return true;
     	}
     	catch(Exception e) {
@@ -120,8 +127,8 @@ public class User extends Model {
     		    System.out.println("Error the user you requested exists");
     		    return false;
     	    }
-    	    query("Insert into users(name, email,last_name, gender, password, age) "
-    	    		+ "values('"+name+"','"+email+"' ,'"+lastName+"', '"+gender+"', '"+password+"', "+age+" ) ");
+    	    query("Insert into users(name, email,last_name, gender, password, age, balance) "
+    	    		+ "values('"+name+"','"+email+"' ,'"+lastName+"', '"+gender+"', '"+password+"', "+age+", 100 ) ");
     	    return true;
     	}
     	catch(Exception e) {
@@ -129,6 +136,17 @@ public class User extends Model {
     		e.printStackTrace();
     		return false;
     	}
+    }
+    public boolean deposit(double m) {
+    	refresh();
+    	double newBalance = this.balance + m;
+    	this.setBalance(newBalance);
+    	return this.update();
+    	
+    }
+    public boolean canBuy(double m) {
+    	refresh();
+    	return balance >= m;
     }
     public boolean exists(){
     	//return 

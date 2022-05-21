@@ -9,7 +9,7 @@ public abstract class View {
       abstract public void show();
       abstract public JComponent getMainComponent();
       
-      protected JComponent[] components = new JComponent[1000];
+      protected JComponent[] components = new JComponent[10000];
       protected int componentLen = 0;
       
  	  protected void registerComponent(JComponent ...component) {

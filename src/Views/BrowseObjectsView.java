@@ -1,6 +1,6 @@
 package Views;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -10,6 +10,7 @@ import Interactors.SaleObjectInteractor;
 import javax.swing.*;
 import Models.SaleObject;
 import Main.Globals;
+import Main.Main;
 
 public class BrowseObjectsView extends View{
     private JPanel mainComponent = new JPanel();
@@ -21,7 +22,7 @@ public class BrowseObjectsView extends View{
    
 	@Override
 	public JComponent build() {
-		
+		pane.removeAll();
 		mainComponent.setLayout(new BorderLayout());
 		mainComponent.setBackground(Color.white);
 		registerComponent(title, objScroll, backButton, pane, mainComponent);
@@ -42,9 +43,10 @@ public class BrowseObjectsView extends View{
 			
 			var obj = objs[i];
 			//objScroll.add(new JLabel("" + obj));
-		
+		    var seeDetails = new JButton("See Details");
+		    var writeComment = new JButton("Write Comment");
 			var row = new JPanel();
-			row.setLayout(new BorderLayout());
+			row.setLayout(new FlowLayout(FlowLayout.LEFT));
 			var label = new JLabel(""+ obj);
 			var button = new JButton("Buy $$");
             var cartButton = new JButton("Add To Cart");
@@ -52,7 +54,7 @@ public class BrowseObjectsView extends View{
             cartButton.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		try {
-						SaleObjectInteractor.addToCart(obj.getId(), Main.Globals.userId);
+						SaleObjectInteractor.addToCart(obj.getId(), Globals.userId);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						showMessage("Error couldn't add to cart");
@@ -64,22 +66,46 @@ public class BrowseObjectsView extends View{
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						SaleObjectInteractor.buyObject(obj.getId(), obj.getOwnerId(), Main.Globals.userId);
+						SaleObjectInteractor.buyObject(obj.getId(), obj.getOwnerId(), Globals.userId);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						//  Main.Main.mainWindow.clear();
-						  Main.Main.mainWindow.showMessage("Can not buy!");
+						  Main.mainWindow.showMessage("Can not buy!");
 						e1.printStackTrace();
 					}
 					finally {
-					    Main.Main.mainWindow.showMessage("You have bougt it!!");
+					    Main.mainWindow.showMessage("You have bougt it!!");
 					}		
 					}
 			});
-			
-			row.add(button, BorderLayout.EAST);
+			seeDetails.addActionListener(new ActionListener() {
+		    	public void actionPerformed(ActionEvent e) {
+		    		try {
+		    			Globals.viewingObject = obj.getId();
+						Main.mainWindow.goToView("/seecomments");
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    	}
+		    });
+		    writeComment.addActionListener(new ActionListener() {
+		    	public void actionPerformed(ActionEvent e) {
+		    		try {
+		    			Globals.viewingObject = obj.getId();
+						Main.mainWindow.goToView("/writecomment");
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		    	}
+		    });
+		    row.add(new JLabel(new CataImage().build(obj.getCata() - 1)));
 			row.add(label);
-			row.add(cartButton, BorderLayout.WEST);
+			row.add(button);
+			row.add(cartButton);
+			row.add(seeDetails);
+			row.add(writeComment);
 			var cons = new GridBagConstraints();
 			cons.gridx = 0;
 			cons.gridy = i* 20;
@@ -100,7 +126,8 @@ public class BrowseObjectsView extends View{
 					backButton.setVisible(false);
 					mainComponent.setVisible(false);
 					//Main.Main.mainWindow.clear();
-					Main.Main.mainWindow.goToView("/main");
+					Globals.searchTerm = "";
+					Main.mainWindow.goToView("/main");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
