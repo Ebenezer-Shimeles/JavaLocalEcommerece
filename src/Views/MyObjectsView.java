@@ -59,7 +59,9 @@ public class MyObjectsView extends View{
 						}
 					}
 				});
-		     
+				obj.refresh();
+				System.out.println("Cata: " + obj.getCata());
+				row.add(new JLabel(new CataImage().build(obj.getCata() - 1)));
 				row.add(label);
 			  	row.add(button);
 				var cons = new GridBagConstraints();

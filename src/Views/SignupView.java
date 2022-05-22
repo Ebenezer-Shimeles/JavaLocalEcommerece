@@ -14,7 +14,11 @@ public class SignupView extends View implements ActionListener, ItemListener{
 	char gender='M';
 	
 	
-	
+	private ImageIcon im =  new ImageIcon(getClass().getClassLoader().getResource("q.jpg"));
+    private ImageIcon im2 = new ImageIcon(
+          im.getImage().getScaledInstance(1000,700, 0)
+            );
+    private JLabel bgImage = new JLabel("",im2,JLabel.CENTER);
 	 private String[] javaOptions = {"Male", "Female"};
 	 private JButton goToSignup = new JButton("Or Login");
 	 private JPanel mainComponent = new JPanel();
@@ -48,7 +52,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 label.setBackground(Color.blue);
 		// inputPanel.setLayout(null);
 		 
-		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,26);
+		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,30);
 		 label.setFont(newLabelFont);
 		 registerComponent(inputPanel);
 		 registerComponent(signupButton);
@@ -68,7 +72,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 
 		 
 		 inputPanel.setLayout(null);
-		
+		  label.setFont(new Font("serif", Font.ITALIC, 25));
 		 label.setBounds(50, 50, 800,20);
 		 
 		 
@@ -80,26 +84,27 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 passwordField.setBounds(50, 400, inputLen, 30);
 		 signupButton.setBounds(50, 600, inputLen, 30);
 		 girlImage.setBounds(600, 0, 1000, 500);
-		 inputPanel.setBounds(0,0, 1200, 1000);
+		 inputPanel.setBounds(0,0, 1000, 1000);
 		 genderMaleRadio.addItemListener(this);
-		 inputPanel.add(signupButton);
-		 inputPanel.add(label);
-		 inputPanel.add(emailField);
-		 inputPanel.add(goToSignup);
-		 inputPanel.add(ageField);
-		 inputPanel.add(passwordField);
-		 inputPanel.add(genderMaleRadio);
-		 inputPanel.add(nameField);
-		 inputPanel.add(lastNameField);
-		 inputPanel.setBackground(Color.white);
-		 
+		 bgImage.add(signupButton);
+		 bgImage.add(label);
+		 bgImage.add(emailField);
+		 bgImage.add(goToSignup);
+		 bgImage.add(ageField);
+		 bgImage.add(passwordField);
+		 bgImage.add(genderMaleRadio);
+		 bgImage.add(nameField);
+		 bgImage.add(lastNameField);
+		 bgImage.setBackground(Color.white);
+		 bgImage.setBounds(0,0,1000,700);
+		 inputPanel.add(bgImage);
 		 mainComponent.setLayout(null);
 		 
 		 mainComponent.add(inputPanel);
 		 
 		// nameField.addActionListener(this);
 		 
-		 inputPanel.add(girlImage);
+		// inputPanel.add(girlImage);
 		 goToSignup.addActionListener(new GoToLogin());
 		 signupButton.addActionListener(this);
     	 return mainComponent;

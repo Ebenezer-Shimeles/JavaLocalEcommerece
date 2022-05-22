@@ -20,7 +20,7 @@ public class CommentsView extends View {
 	public JComponent build() {
 		mainComponent.setBackground(Color.white);
 		scrollMain.removeAll();
-		registerComponent(scrollMain, scroll, descr, title, backButton, scrollMain);
+		registerComponent(mainComponent, scrollMain, scroll, descr, title, backButton, scrollMain);
 		
 		try {
 			descr.setText(SaleObject.findById(Globals.userId) + "");

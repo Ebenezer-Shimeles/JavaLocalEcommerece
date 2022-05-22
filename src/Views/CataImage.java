@@ -16,6 +16,8 @@ public class CataImage{
 	
 
     public ImageIcon build(int c) {
+    	System.out.println("Cata int: " + c);
+    	if(c > 5 || c<0) c= 5; 
     	String img = map[c];
     	 ImageIcon icon1 = new ImageIcon(getClass().getClassLoader().getResource(img));
     	 return  new ImageIcon(

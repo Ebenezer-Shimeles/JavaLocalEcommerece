@@ -29,6 +29,7 @@ public class SaleObject extends Model {
 		    	objects[i].setName(rs.getString("name"));
 		    	objects[i].setOwnerId(String.valueOf(rs.getInt("owner_id")));
 		    	objects[i].setQuantity(rs.getInt("quantity"));
+		    	objects[i].setCata(rs.getInt("cata"));
 		    }
 		    return objects;
 		} catch (SQLException e) {

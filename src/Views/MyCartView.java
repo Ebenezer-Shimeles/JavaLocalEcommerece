@@ -67,6 +67,7 @@ public class MyCartView extends View{
 					}
 				}
 			});
+			row.add(new JLabel(new CataImage().build(obj.getCata() - 1)));
 			row.add(label);
 			row.add(buy);
 	       	row.add(button);
