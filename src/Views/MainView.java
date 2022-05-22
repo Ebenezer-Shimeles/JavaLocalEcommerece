@@ -29,6 +29,11 @@ public class MainView extends View{
    private ImageIcon icon = new ImageIcon(
       icon1.getImage().getScaledInstance(200, 200, 0)
 		   );
+   ImageIcon im =  new ImageIcon(getClass().getClassLoader().getResource("q.jpg"));
+   private ImageIcon im2 = new ImageIcon(
+         im.getImage().getScaledInstance(1000,700, 0)
+           );
+   JLabel lim = new JLabel("",im2,JLabel.CENTER);
    private JLabel top = new JLabel(icon);
    private JButton sellButton = new JButton("Sell!");
   
@@ -113,6 +118,14 @@ public class MainView extends View{
 		    }
 		    });
 	   mainComponent.setLayout(null);
+	
+	     
+	   
+	     
+	     lim.setBounds(0,0,1000,700);
+	     mainComponent.add(lim);
+	          
+	     nameLabel.setBounds(380, 150, 600, 50);
 	   searchInput.setBounds(380, 300, 300, 30);
 	   searchButton.setBounds(700, 300, 150, 30);
 	   nameLabel.setBounds(380, 200, 600, 50);
@@ -159,19 +172,19 @@ public class MainView extends View{
 			}   
 		   }
 	   });
-	   mainComponent.add(searchButton);
-	   mainComponent.add(searchInput);
-	   mainComponent.add(myTrans);
-	   mainComponent.add(sellButton);
-	   mainComponent.add(myAccount);
-	   mainComponent.add(top);
-	   mainComponent.add(logoutButton);  
-	   mainComponent.add(nameLabel); 
-	   mainComponent.add(buy); 
-	   mainComponent.add(cart);  
-	   mainComponent.add(ammount);
+	   lim.add(searchButton);
+	   lim.add(searchInput);
+	   lim.add(myTrans);
+	   lim.add(sellButton);
+	   lim.add(myAccount);
+	   lim.add(top);
+	   lim.add(logoutButton);  
+	   lim.add(nameLabel); 
+	   lim.add(buy); 
+	   lim.add(cart);  
+	   lim.add(ammount);
 	 //  mainComponent.add( home);  
-	   mainComponent.add(myObjects);
+	  lim.add(myObjects);
 	   
    }
     public JComponent build() {

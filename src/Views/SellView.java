@@ -69,15 +69,17 @@ public class SellView extends View implements ActionListener{
 	
 	@Override
 	public JComponent build() {
+		main.removeAll();
 		registerComponent(main, nameF, brandF, descT, descrF, moneyF, quantityF, sendButton, cataLabel, cataBox,
 				backButton, title);
 		JComponent [] comps = {  title, nameF, brandF,descT,  descrF, moneyF, quantityF, cataLabel, cataBox, sendButton,
 				backButton};
 	    for(int i=0;i<comps.length;i++) {
 	    	comps[i].setBounds(300, 10 + 40 * i, 300, 30);
+	    	registerComponent(comps[i]);
 	    	main.add(comps[i]);
 	    }
-		init();
+		//init();
 		return main;
 	}
 
