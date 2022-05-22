@@ -82,6 +82,7 @@ public class BrowseObjectsView extends View{
 		    	public void actionPerformed(ActionEvent e) {
 		    		try {
 		    			Globals.viewingObject = obj.getId();
+		    			Globals.searchTerm = "";
 						Main.mainWindow.goToView("/seecomments");
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -93,6 +94,7 @@ public class BrowseObjectsView extends View{
 		    	public void actionPerformed(ActionEvent e) {
 		    		try {
 		    			Globals.viewingObject = obj.getId();
+		    			Globals.searchTerm = "";
 						Main.mainWindow.goToView("/writecomment");
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block

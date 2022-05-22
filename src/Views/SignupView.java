@@ -23,7 +23,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
 	 private JLabel label = new JLabel("Hello, Welcome to our GEBEYA COMERCE");
 	 private final static int inputLen = 300; 
 	 private JTextField emailField = new JTextField("Email");
-	 private JTextField nameField = new JTextField("Name");
+	 private JTextField nameField = new JTextField("First Name");
 	 private JTextField passwordField = new JTextField("Password");
 	 private JTextField lastNameField = new JTextField("Last Name");
 	 private JTextField ageField = new JTextField("age");
@@ -120,11 +120,23 @@ public class SignupView extends View implements ActionListener, ItemListener{
            password = this.passwordField.getText();
            try {
                age = Integer.parseInt( this.ageField.getText());
+               if(age  < 18) {
+            	   showMessage("You must be at least 18 years old to continue");
+            	   return;
+               }
            }catch(NumberFormatException ex) {
         	   showMessage("The age is not a number");
         	   return;
            }
-
+           
+           if(!email.contains(".") || !email.contains("@")) {
+        	   showMessage("Email is invalid");
+        	   return;
+           }
+           if(password.length() < 5) {
+        	   showMessage("Password is short :(");
+        	   return;
+           }
            if(name == "" || email == "" || password == "" ) {
         	   showMessage("Empty field detected!");
         	   return;

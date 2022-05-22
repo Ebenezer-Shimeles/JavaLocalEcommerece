@@ -14,14 +14,17 @@ public class MyAccountView extends View{
     private JButton back = new JButton("Back to home");
     private JButton deposit = new JButton("Deposit");
     private JTextField howMuch = new JTextField("How much ?");
+
+    
 	@Override
 	public JComponent build() {
+		registerComponent(low, deposit, back, mainComponent);
 		mainComponent.setBackground(Color.white);
 		low.add(deposit);
 		low.add(back);
 		mainComponent.add(howMuch);
-		registerComponent( howMuch,deposit, back,  low);
-		mainComponent.add(low, BorderLayout.SOUTH);
+		low.setBackground(Color.white);
+		mainComponent.add(low, BorderLayout.EAST);
 		deposit.addActionListener(new ActionListener() {
 		   public void actionPerformed(ActionEvent e) {
 				   try {
@@ -40,6 +43,7 @@ public class MyAccountView extends View{
 		   public void actionPerformed(ActionEvent e) {
 			
 				   try {
+					 mainComponent.removeAll();
 					Main.mainWindow.goToView("/main");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
