@@ -73,9 +73,7 @@ public class BrowseObjectsView extends View{
 						  Main.mainWindow.showMessage("Can not buy!");
 						e1.printStackTrace();
 					}
-					finally {
-					    Main.mainWindow.showMessage("You have bougt it!!");
-					}		
+					
 					}
 			});
 			seeDetails.addActionListener(new ActionListener() {

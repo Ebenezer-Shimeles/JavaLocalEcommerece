@@ -48,7 +48,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 label.setBackground(Color.blue);
 		// inputPanel.setLayout(null);
 		 
-		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,label.getFont().getSize() + 10);
+		 Font newLabelFont=new Font(label.getFont().getName(),Font.ITALIC,26);
 		 label.setFont(newLabelFont);
 		 registerComponent(inputPanel);
 		 registerComponent(signupButton);
@@ -73,13 +73,14 @@ public class SignupView extends View implements ActionListener, ItemListener{
 		 
 		 
 		 nameField.setBounds(50, 160, inputLen, 30);
-		 emailField.setBounds(50, 200, inputLen, 30);
-		 genderMaleRadio.setBounds(50, 260, inputLen, 30);
-		 ageField.setBounds(50, 300, inputLen, 30);
-		 passwordField.setBounds(50, 350, inputLen, 30);
-		 signupButton.setBounds(50, 400, inputLen, 30);
-		 girlImage.setBounds(600, 0, 600, 500);
-		 inputPanel.setBounds(0,0, 1000, 1000);
+		 lastNameField.setBounds(50, 200, inputLen, 30);
+		 emailField.setBounds(50, 260, inputLen, 30);
+		 genderMaleRadio.setBounds(50, 300, inputLen, 30);
+		 ageField.setBounds(50, 350, inputLen, 30);
+		 passwordField.setBounds(50, 400, inputLen, 30);
+		 signupButton.setBounds(50, 600, inputLen, 30);
+		 girlImage.setBounds(600, 0, 1000, 500);
+		 inputPanel.setBounds(0,0, 1200, 1000);
 		 genderMaleRadio.addItemListener(this);
 		 inputPanel.add(signupButton);
 		 inputPanel.add(label);

@@ -139,7 +139,9 @@ public class User extends Model {
     }
     public boolean deposit(double m) {
     	refresh();
+    
     	double newBalance = this.balance + m;
+    	System.out.print("New Balance " + newBalance);
     	this.setBalance(newBalance);
     	return this.update();
     	

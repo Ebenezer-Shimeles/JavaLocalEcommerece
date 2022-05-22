@@ -12,7 +12,7 @@ public class SaleObjectInteractor {
 		var user = User.findByPk(Globals.userId);
 		var obj = SaleObject.findById(objId);
 		if(!user.canBuy(obj.getMoney())) {
-			Main.Main.mainWindow.showMessage("It seems you don't have enough balance please recharge :(");
+			Main.Main.mainWindow.showMessage("It seems you don't have enough balance please recharge your account :(");
 			return;
 		}
 		
@@ -21,8 +21,8 @@ public class SaleObjectInteractor {
 			return;
 		}
 		var seller = User.findByPk(sellerId);
-		user.deposit(-obj.getQuantity());
-		seller.deposit(obj.getQuantity());
+		user.deposit(-1 * obj.getMoney());
+		seller.deposit(obj.getMoney());
 		obj.setQuantity(obj.getQuantity() - 1);
 		obj.update();
 	    var t = new Transaction();
@@ -31,6 +31,7 @@ public class SaleObjectInteractor {
 	    t.setSellerId(sellerId);
 	    
 	    t.create();
+	    Main.Main.mainWindow.showMessage("You have bought it :)");
 	}
 	public static void addToCart(String objectId, String userId) throws SQLException{
 		var obj = SaleObject.findById(objectId);

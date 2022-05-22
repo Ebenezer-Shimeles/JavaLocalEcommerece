@@ -2,6 +2,8 @@ package Models;
 
 import java.sql.*;
 
+import Main.Globals;
+
 public class SaleObject extends Model {
     private String id = null;
     private String ownerId = null;
@@ -38,11 +40,11 @@ public class SaleObject extends Model {
     
     public static SaleObject[] all() {
     	try {
-			var rs = query("select * from objects where quantity > 0");
+			var rs = query("select * from objects where (quantity > 0) and (not owner_id  = " + Globals.userId+")");
 			int len=0;
 			while(rs.next()) len++;
 			SaleObject[] objects = new SaleObject[len];
-			rs = query("select * from objects where quantity > 0");
+			rs = query("select * from objects where (quantity > 0) and (not owner_id = " + Globals.userId+")");
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));
@@ -134,12 +136,12 @@ public class SaleObject extends Model {
     public static SaleObject[] search(String kw) {
     	try {
 			var rs = query("select * from objects where quantity > 0 and  "
-					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' )");
+					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' )  and (not owner_id = " + Globals.userId+")");
 			int len=0;
 			while(rs.next()) len++;
 			SaleObject[] objects = new SaleObject[len];
 			rs = query("select * from objects where quantity > 0 and  "
-					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' )");
+					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' ) and (not owner_id = " + Globals.userId+")");
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));
@@ -197,7 +199,7 @@ public class SaleObject extends Model {
     @Override
     public boolean update() {
         try {
-            query("update objects set owner_id = "+ownerId+" cata = "+cata+", ,name = '"+name+"' , quantity = "+quantity+" ,descr = '"+descr+"' ,price = "+money+" "
+            query("update objects set owner_id = "+ownerId+", cata = "+cata+" ,name = '"+name+"' , quantity = "+quantity+" ,descr = '"+descr+"' ,price = "+money+" "
             		+ " where id = " + id);
             return true;
         }catch(SQLException e) {

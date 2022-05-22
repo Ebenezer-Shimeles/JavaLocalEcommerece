@@ -117,7 +117,7 @@ public class MainView extends View{
 	   searchButton.setBounds(700, 300, 150, 30);
 	   nameLabel.setBounds(380, 200, 600, 50);
 	   ammount.setBounds(800, 170, 90, 40);
-	   var font = new Font(logoutButton.getFont().getName(), Font.ITALIC, logoutButton.getFont().getSize()-3);
+	   var font = new Font(logoutButton.getFont().getName(), Font.ITALIC, 10);
 	   mainComponent.setBackground(Color.white);
 	   top.setBounds(0,0, 200, 200);
 	   for(int i=0;i < buttons.length; i++) {
@@ -207,7 +207,7 @@ public class MainView extends View{
    	 }
    	    nameLabel.setText("Welcome, " + name + " " + lastName);
    	    Font nameFont = nameLabel.getFont();
-   	    nameLabel.setFont(new Font(nameFont.getName(), Font.ITALIC, nameFont.getSize() + 4));
+   	    nameLabel.setFont(new Font(nameFont.getName(), Font.ITALIC, 26+ 4));
    	
     	// Main.mainWindow.showMessage("userID: " + Globals.userId);
           return mainComponent;    	
