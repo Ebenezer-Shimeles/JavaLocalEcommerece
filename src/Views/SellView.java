@@ -59,6 +59,15 @@ public class SellView extends View implements ActionListener{
 	private JButton sendButton = new JButton("Send!  ");
 	private JButton backButton = new JButton("Back to home");
 	
+	ImageIcon im =  new ImageIcon(getClass().getClassLoader().getResource("2.jpg"));
+    private ImageIcon bgImage = new ImageIcon(
+          im.getImage().getScaledInstance(1000,700, 0)
+            );
+    ImageIcon im1 =  new ImageIcon(getClass().getClassLoader().getResource("ImageA.png"));
+    private ImageIcon inputI = new ImageIcon(
+          im1.getImage().getScaledInstance(200,200, 0)
+            );
+    
 	
 	public SellView(){
 		main.setLayout(null);
@@ -69,17 +78,29 @@ public class SellView extends View implements ActionListener{
 	
 	@Override
 	public JComponent build() {
+		
+		JLabel All= new JLabel("",bgImage,JLabel.CENTER) ;
+		 JButton ImageInput= new JButton(inputI) ;
+		 JLabel ImageText= new JLabel("Image") ;
+		    All.setBounds(0,0,1000,700);
+		    ImageText.setBounds(500,10,300,30);
+		    ImageInput.setBounds(500,300,150,150);
+		    
+		    All.add(ImageText);
+		    All.add(ImageInput);
+		
 		main.removeAll();
-		registerComponent(main, nameF, brandF, descT, descrF, moneyF, quantityF, sendButton, cataLabel, cataBox,
+		registerComponent(main, nameF, brandF, descT, descrF, moneyF, quantityF, sendButton, cataLabel, cataBox,All,
 				backButton, title);
 		JComponent [] comps = {  title, nameF, brandF,descT,  descrF, moneyF, quantityF, cataLabel, cataBox, sendButton,
 				backButton};
 	    for(int i=0;i<comps.length;i++) {
-	    	comps[i].setBounds(300, 10 + 40 * i, 300, 30);
+	    	comps[i].setBounds(150, 10 + 40 * i, 300, 30);
 	    	registerComponent(comps[i]);
-	    	main.add(comps[i]);
+	    	All.add(comps[i]);
 	    }
 		//init();
+	    main.add(All);
 		return main;
 	}
 
@@ -88,6 +109,25 @@ public class SellView extends View implements ActionListener{
 		// TODO Auto-generated method stub
 		
 	}
+	  public void clear() {
+		   /*
+		    * 	private JTextField nameF = new JTextField("Name");
+	private JTextField brandF = new JTextField("Brand");
+	private JLabel descT = new JLabel("Description: ");
+	private JTextArea descrF = new JTextArea("Description....", 5, 5);
+	private JTextField moneyF = new JTextField("Cost");
+	private JTextField quantityF = new JTextField("Quantity");
+		    * */
+		  nameF.setText("Name");
+		  brandF.setText("Brand");
+		  descrF.setText("Description");
+		  moneyF.setText("Cost");
+		  quantityF.setText("Quantity");
+		  
+		   super.clear();
+	
+		   
+	   }
 
 	@Override
 	public JComponent getMainComponent() {

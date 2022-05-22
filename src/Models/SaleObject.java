@@ -13,6 +13,7 @@ public class SaleObject extends Model {
     private String descr;
     private double money;
    private int cata;
+ 
     public static SaleObject[] of(String userId) {
     	try {
 			var rs = query("select * from objects where owner_id = " + userId);

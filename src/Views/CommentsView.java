@@ -15,7 +15,7 @@ public class CommentsView extends View {
 	private JPanel scrollMain = new JPanel(l);
 	private JButton backButton = new JButton("Back to home");
 	private JScrollPane scroll = new JScrollPane(scrollMain);
-	private JTextArea descr = new JTextArea(10, 100);
+	private JTextArea descr = new JTextArea(5, 100);
 	@Override
 	public JComponent build() {
 		mainComponent.setBackground(Color.white);

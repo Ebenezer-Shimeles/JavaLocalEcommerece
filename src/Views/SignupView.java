@@ -147,7 +147,8 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	   showMessage("Empty field detected!");
         	   return;
            }
-           String id= UserInteractor.createUser(name, lastName, email, gender, password, age);
+           String id= UserInteractor.create
+        		   User(name, lastName, email, gender, password, age);
           
            if(id != null){
         	     System.out.println("IDDDDDDDD: "+ id);

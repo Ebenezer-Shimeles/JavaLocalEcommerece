@@ -1,5 +1,6 @@
 package Views;
 import javax.swing.*;
+import java.awt.*;
 
 import Main.Main;
 
@@ -28,7 +29,13 @@ public abstract class View {
  			  
  			  if(components[i] == null) continue;
  			 components[i].setVisible(false); 
- 			  //getMainComponent().remove( components[i]);
+// 			 if(components[i] instanceof JTextArea) {
+// 				 ((JTextArea)components[i]).setText("");
+// 			 }
+// 			 else if(components[i] instanceof JTextField) {
+// 				((JTextField)components[i]).setText("");
+// 			 }
+// 			  //getMainComponent().remove( components[i]);
  			 }
  	  }
  	  public void init() {

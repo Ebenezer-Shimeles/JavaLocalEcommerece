@@ -5,7 +5,7 @@ import Views.View;
 
 public class MainWindow extends JFrame{
 	 private View currentView = null;
-	 private String[] viewNames = new String[100];
+	 private String[] viewNames = new String[1000];
 	 private View[] views = new View[100];
 	 private int viewLen = 0;
 	 private boolean first = true;
