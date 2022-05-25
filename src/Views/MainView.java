@@ -23,7 +23,7 @@ public class MainView extends View{
    private JButton cart= new JButton("My Cart");
    private JButton home= new JButton("Home ");
    private JButton myObjects = new JButton("My Objects");
-   private JButton myAccount = new JButton("My Account");
+   private JButton myAccount = new JButton("Recharge");
    private JLabel ammount = new JLabel("");
    private ImageIcon icon1 = new ImageIcon(getClass().getClassLoader().getResource("icon.jpg"));
    private ImageIcon icon = new ImageIcon(

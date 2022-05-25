@@ -11,7 +11,8 @@ import javax.swing.*;
 import Models.SaleObject;
 import Main.Globals;
 import Main.Main;
-
+import Models.NumberOfCarts;
+import Models.NumberOfComments;
 public class BrowseObjectsView extends View{
     private JPanel mainComponent = new JPanel();
     private JLabel title = new JLabel("Objects For Sale");
@@ -37,6 +38,7 @@ public class BrowseObjectsView extends View{
 		else {
 			objs = SaleObject.search(Globals.searchTerm);
 		}
+	
 		var l = new GridBagLayout();
 		pane.setLayout(l);
 		for(int i=0;i<objs.length&& objs[i] != null;i++) {
@@ -50,6 +52,8 @@ public class BrowseObjectsView extends View{
 			var label = new JLabel(""+ obj);
 			var button = new JButton("Buy $$");
             var cartButton = new JButton("Add To Cart");
+            var numberOfComments = new JLabel( String.valueOf(NumberOfComments.ofObject(obj)) + " Comments");
+            var numberOfCarts = new JLabel("In " + String.valueOf(NumberOfCarts.ofObject(obj)) + " Carts");
             
             cartButton.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent e) {
@@ -106,6 +110,8 @@ public class BrowseObjectsView extends View{
 			row.add(cartButton);
 			row.add(seeDetails);
 			row.add(writeComment);
+			row.add(numberOfComments);
+			row.add(numberOfCarts);
 			var cons = new GridBagConstraints();
 			cons.gridx = 0;
 			cons.gridy = i* 20;
@@ -120,6 +126,10 @@ public class BrowseObjectsView extends View{
 		mainComponent.add(title, BorderLayout.NORTH);
 		mainComponent.add(objScroll);
 		mainComponent.add(backButton, BorderLayout.SOUTH);
+		if(objs.length == 0) {
+			mainComponent.add(new JLabel("No results..."));
+			//return mainComponent;
+		}
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

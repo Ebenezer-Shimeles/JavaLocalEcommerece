@@ -40,8 +40,8 @@ public class CommentsView extends View {
 		for(int i=0;i<comments.length;i++) {
 			var c = new JLabel(comments[i].toString());
 			GridBagConstraints cons = new GridBagConstraints();
-			cons.gridx = 0;
-			cons.gridy = i* 20;
+			cons.gridx = 10;
+			cons.gridy = i* 40;
 			
 			l.setConstraints(c, cons);
 			scrollMain.add(c);
