@@ -2,6 +2,8 @@ package Views;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
+
 import javax.swing.*;
 import Interactors.SaleObjectInteractor;
 import Main.*;
@@ -54,6 +56,19 @@ public class MyCartView extends View{
 			var label = new JLabel(""+ obj);
 			var button = new JButton("Remove from cart");
             var buy = new JButton("Buy");
+            buy.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						SaleObjectInteractor.buyObject(obj.getId(), obj.getOwnerId(), Globals.userId);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						// Main.Main.mainWindow.clear();
+						Main.mainWindow.showMessage("Can not buy!");
+						e1.printStackTrace();
+					}
+
+				}
+			});
             
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
