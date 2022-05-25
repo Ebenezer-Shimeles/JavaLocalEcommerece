@@ -14,7 +14,43 @@ public class MyAccountView extends View{
     private JButton back = new JButton("Back to home");
     private JButton deposit = new JButton("Deposit");
     private JTextField howMuch = new JTextField("How much ?");
-
+   
+    
+   public MyAccountView(){
+    	deposit.addActionListener(new ActionListener() {
+ 		   public void actionPerformed(ActionEvent e) {
+ 				   try {
+ 					   System.out.println("Addin: " + Double.parseDouble(howMuch.getText()));
+ 					   var user =User.findByPk(Globals.userId);
+ 					   user.deposit(Double.parseDouble(howMuch.getText()));
+ 					   user = null;
+ 					   howMuch.setText("How much?");
+ 					    Main.mainWindow.goToView("/main");
+ 				} catch (Exception e1) {
+ 					// TODO Auto-generated catch block
+ 					showMessage("Invalid format!");
+ 					System.out.print(e1);
+ 					e1.printStackTrace();
+ 				}
+ 			   
+ 		   }
+ 	   });
+ 		back.addActionListener(new ActionListener() {
+ 		   public void actionPerformed(ActionEvent e) {
+ 			
+ 				   try {
+ 					 mainComponent.removeAll();
+ 					Main.mainWindow.goToView("/main");
+ 				} catch (Exception e1) {
+ 					// TODO Auto-generated catch block
+ 					System.out.print(e1);
+ 					e1.printStackTrace();
+ 				}
+ 			   
+ 		   }
+ 	   });
+ 		
+    }
     
 	@Override
 	public JComponent build() {
@@ -25,34 +61,6 @@ public class MyAccountView extends View{
 		mainComponent.add(howMuch);
 		low.setBackground(Color.white);
 		mainComponent.add(low, BorderLayout.EAST);
-		deposit.addActionListener(new ActionListener() {
-		   public void actionPerformed(ActionEvent e) {
-				   try {
-					   User.findByPk(Globals.userId).deposit(Double.parseDouble(howMuch.getText()));
-					    Main.mainWindow.goToView("/main");
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					showMessage("Invalid format!");
-					System.out.print(e1);
-					e1.printStackTrace();
-				}
-			   
-		   }
-	   });
-		back.addActionListener(new ActionListener() {
-		   public void actionPerformed(ActionEvent e) {
-			
-				   try {
-					 mainComponent.removeAll();
-					Main.mainWindow.goToView("/main");
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					System.out.print(e1);
-					e1.printStackTrace();
-				}
-			   
-		   }
-	   });
 		
 		return mainComponent;
 	}
