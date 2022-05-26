@@ -12,6 +12,32 @@ public class User extends Model {
 	private String email;
 	private double balance;
 	
+	public double getAvgSpend() {
+		try {
+			var rs = query("select avg(transactions.ammount) as avg from users left join transactions on transactions.buyer_id = users.id or transactions.seller_id = users.id group by users.id having users.id = " + this.id );
+		   if(!rs.next()) return 0;
+		   return rs.getDouble("avg");
+		   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+				
+	}
+	public double getSumSpend() {
+		try {
+			var rs = query("select sum(transactions.ammount) as sum from users left join transactions on transactions.buyer_id = users.id or transactions.seller_id = users.id group by users.id having users.id = " + this.id);
+			   if(!rs.next()) return 0;
+			return rs.getDouble("sum");
+		   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+			
+	}
 	
 	public void setEmail(String email) {this.email = email;}
 	public String getEmail() {return this.email;}

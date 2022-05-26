@@ -46,7 +46,7 @@ public class SaleObject extends Model {
 			int len=0;
 			while(rs.next()) len++;
 			SaleObject[] objects = new SaleObject[len];
-			rs = query("select * from objects where (quantity > 0) and (not owner_id = " + Globals.userId+")");
+			rs = query("select * from objects where (quantity > 0) and (not owner_id = " + Globals.userId+") order by brand asc");
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));
@@ -143,7 +143,7 @@ public class SaleObject extends Model {
 			while(rs.next()) len++;
 			SaleObject[] objects = new SaleObject[len];
 			rs = query("select * from objects where quantity > 0 and  "
-					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' ) and (not owner_id = " + Globals.userId+")");
+					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' ) and (not owner_id = " + Globals.userId+") order by brand asc");
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));

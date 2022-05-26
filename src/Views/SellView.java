@@ -13,7 +13,17 @@ public class SellView extends View implements ActionListener{
 	    	brand = brandF.getText();
 	    	desc = descrF.getText();
 	    	money = Double.parseDouble(moneyF.getText());
+	    	if(money <= 0) {
+	    		showMessage("Error: Money shouldn't be less than or equal to zero");
+	    		return;
+	    	}
+	    	
 	    	quantity = Integer.parseInt(quantityF.getText());
+	    	if(quantity <= 0)
+	    	{
+	    		showMessage("Error: Quantity shouldn't be less than or equal to zero");
+	    		return;
+	    	}
 	    	int cata = cataBox.getSelectedIndex();
 	    	SaleObjectInteractor.addSaleObject(Globals.userId, name, brand, quantity, desc, money, cata + 1);
 	    	
@@ -22,7 +32,7 @@ public class SellView extends View implements ActionListener{
 	    
 	    	Main.Main.mainWindow.goToView("/main");
 	    }catch(NumberFormatException ex) {
-	    	showMessage("Invalid number format");
+	    	showMessage("Invalid number format given in price or quantity!");
 	    	return;
 	    }
 	    catch(Exception c) {

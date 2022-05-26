@@ -126,8 +126,13 @@ public class SignupView extends View implements ActionListener, ItemListener{
            password = this.passwordField.getText();
            try {
                age = Integer.parseInt( this.ageField.getText());
-               if(age  < 18) {
-            	   showMessage("You must be at least 18 years old to continue");
+               if(age  < 13) {
+            	   showMessage("You must be at least 13 years old to continue");
+            	   return;
+               }
+               if(age > 120)
+               {
+            	   showMessage("You must be at most 120 years old to continue");
             	   return;
                }
            }catch(NumberFormatException ex) {
@@ -143,7 +148,7 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	   showMessage("Password is short :(");
         	   return;
            }
-           if(name == "" || email == "" || password == "" ) {
+           if(name.length() == 0 || email.length() == 0 || password.length() == 0 ) {
         	   showMessage("Empty field detected!");
         	   return;
            }

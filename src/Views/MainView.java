@@ -127,9 +127,9 @@ public class MainView extends View{
 	          
 	     nameLabel.setBounds(380, 150, 600, 50);
 	   searchInput.setBounds(380, 300, 300, 30);
-	   searchButton.setBounds(700, 300, 150, 30);
+	   searchButton.setBounds(700, 300, 300, 30);
 	   nameLabel.setBounds(380, 200, 600, 50);
-	   ammount.setBounds(800, 170, 90, 40);
+	   ammount.setBounds(500, 140, 400, 40);
 	   var font = new Font(logoutButton.getFont().getName(), Font.ITALIC, 10);
 	   mainComponent.setBackground(Color.white);
 	   top.setBounds(0,0, 200, 200);
@@ -211,7 +211,9 @@ public class MainView extends View{
    		  else {
    			//  user.deposit(1000);
    			//  System.out.print(user.canBuy(1));
-   			  ammount.setText("$ " + user.getBalance() + "");
+   			  ammount.setText("Balance: $" + user.getBalance() + "" + " Spent Average: " + user.getAvgSpend() 
+   			  + "  Spent Total: " + user.getSumSpend());
+   			  System.out.println("Total: " + user.getSumSpend());
    			  name = user.getName();
    			  lastName = user.getLastName();
    		  }
