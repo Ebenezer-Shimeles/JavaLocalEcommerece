@@ -1,5 +1,5 @@
 package Main;
-
+import Models.Model;
 import java.sql.*;
 import Models.*;
 import java.awt.*;
@@ -14,6 +14,8 @@ public class Main {
 
 	public static void main(String args[]) {
 		try {
+
+			Model.init();
 			// String iconLocation =
 			// "C:\\Users\\natan\\eclipse-workspace\\Ecommerece\\src\\Views\\icon.jpg";
 //			var user = new User("Ebenezer", "Shimeles", "eye@yahoo.com", 'M', "muze", 20, 7);
@@ -34,7 +36,7 @@ public class Main {
 			mainWindow.registerView("/signup", new SignupView());
 			mainWindow.registerView("/main", new MainView());
 			mainWindow.registerView("/transactions", new MyTransView());
-			mainWindow.registerView("/sell", new SellView());
+			//mainWindow.registerView("/sell", new SellView());
 			mainWindow.registerView("/browse", new BrowseObjectsView());
 			mainWindow.registerView("/myobjs", new MyObjectsView());
 			mainWindow.registerView("/mycart", new MyCartView());

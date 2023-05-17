@@ -126,15 +126,15 @@ public class SignupView extends View implements ActionListener, ItemListener{
            password = this.passwordField.getText();
            try {
                age = Integer.parseInt( this.ageField.getText());
-               if(age  < 13) {
-            	   showMessage("You must be at least 13 years old to continue");
-            	   return;
-               }
-               if(age > 120)
-               {
-            	   showMessage("You must be at most 120 years old to continue");
-            	   return;
-               }
+//               if(age  < 13) {
+//            	   showMessage("You must be at least 13 years old to continue");
+//            	   return;
+//               }
+//               if(age > 120)
+//               {
+//            	   showMessage("You must be at most 120 years old to continue");
+//            	   return;
+//               }
            }catch(NumberFormatException ex) {
         	   showMessage("The age is not a number");
         	   return;
@@ -152,17 +152,21 @@ public class SignupView extends View implements ActionListener, ItemListener{
         	   showMessage("Empty field detected!");
         	   return;
            }
-           String id= UserInteractor.createUser(name, lastName, email, gender, password, age);
-       
-           if(id != null){
-        	     System.out.println("IDDDDDDDD: "+ id);
-        	     Globals.userId = id;
-      		    try {
-	    		    Main.mainWindow.goToView("/login");
-	    		 }catch(Exception v) {
-	    			 v.printStackTrace();
-	    		 }
-           }
+		   try {
+			   String id = UserInteractor.createUser(name, lastName, email, gender, password, age);
+
+			   if (id != null) {
+				   System.out.println("IDDDDDDDD: " + id);
+				   Globals.userId = id;
+				   try {
+					   Main.mainWindow.goToView("/login");
+				   } catch (Exception v) {
+					   v.printStackTrace();
+				   }
+			   }
+		   }catch(Exception ev){
+			   showMessage(ev.toString());
+		   }
            //showMessage(name + " " + lastName + " "+email + " " + password);
      }
      public void itemStateChanged(ItemEvent e)

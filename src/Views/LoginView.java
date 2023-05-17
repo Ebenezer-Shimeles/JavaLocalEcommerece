@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Interactors.UserInteractor;
+import Models.User;
 
 public class LoginView extends View implements ActionListener{
      static final int inputLen = 300;
@@ -91,18 +92,22 @@ public class LoginView extends View implements ActionListener{
            this.showMessage("An empty field is detected");
            return;
          }
-         String id = UserInteractor.loginUser(email, password);
-         if(id!= null) {
-           Globals.userId = id;
-           showMessage("Welcome!");
-           try {
-              Main.mainWindow.goToView("/main");
-           }catch(Exception v) {
-             v.printStackTrace();
-           }
-         }
-         else {
-           showMessage("Wrong password");
+         try {
+             UserInteractor.loginUser(email, password);
+             String id = User.findByEmail(email).getId() + "";
+             if (id != null) {
+                 Globals.userId = id;
+                 showMessage("Welcome!");
+                 try {
+                     Main.mainWindow.goToView("/main");
+                 } catch (Exception v) {
+                     v.printStackTrace();
+                 }
+             } else {
+                 showMessage("Wrong password");
+             }
+         }catch(Exception ev){
+             showMessage(ev.toString());
          }
          
        }

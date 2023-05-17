@@ -2,15 +2,17 @@ package Models;
 
 import java.sql.*;
 
+import  com.microsoft.sqlserver.jdbc.SQLServerDriver;
 public abstract class Model {
 	 protected static Connection con;
 	 public abstract boolean exists();
-	 public abstract boolean create();
+	 public abstract boolean create() throws Exception;
 	 public abstract boolean delete();
 	 public abstract boolean update();
 	 public abstract boolean refresh();
-     static {
+     public static void init(){
     	 try {
+			      System.out.println("Loading connections....");
     	    	//  Runtime.getRuntime().loadLibrary("C:/Windows/System32/crypt32.dll");
     	          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     	          //DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());

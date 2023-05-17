@@ -103,15 +103,20 @@ public class User extends Model {
     	user.print();
     	return user;
     }
-    public boolean checkPassword(String password) {
-    	try {
-    		refresh();
-    		return password.equals(this.password);
-    	}
-    	catch(Exception e) {
-    		System.out.println("Error whil checking password");
-    		return false;
-    	}
+    public static void checkPassword(String email, String password) throws Exception{
+
+        System.out.println("CHecking Password");
+		query("exec [login_user] @email='"+
+				          email +
+				"', @password='"+password+"'");
+//    	try {
+//    		refresh();
+//    		return password.equals(this.password);
+//    	}
+//    	catch(Exception e) {
+//    		System.out.println("Error whil checking password");
+//    		return false;
+//    	}
     }
     public boolean refresh() {
     	try {
@@ -147,21 +152,23 @@ public class User extends Model {
     		return false;
     	}
     }
-    public boolean create() {
-    	try {
+    public boolean create() throws  SQLException {
+
     	    if(this.exists()) {
     		    System.out.println("Error the user you requested exists");
     		    return false;
     	    }
-    	    query("Insert into users(name, email,last_name, gender, password, age, balance) "
-    	    		+ "values('"+name+"','"+email+"' ,'"+lastName+"', '"+gender+"', '"+password+"', "+age+", 100 ) ");
+    	    query( "exec [register_user] "+
+			                "@name = '" + name + "' ," +
+					        "@lastName= '" + lastName + "' ," +
+					        "@gender='" + gender + "' ," +
+					        "@email='"  + email + "' ," +
+					         "@password='" + password+"' ,"+
+					        "@age=" + age
+
+			);
     	    return true;
-    	}
-    	catch(Exception e) {
-    		System.out.println("Error something went wrong when creating the user");
-    		e.printStackTrace();
-    		return false;
-    	}
+
     }
     public boolean deposit(double m) {
     	refresh();
