@@ -169,13 +169,20 @@ create table objects(
  );
  create table catagory(id int identity primary key, name varchar(100) not null);
  alter table objects add cata int foreign key references catagory(id);
-
+ drop table catagory;
+ alter table objects drop FK__objects__cata__3B75D760
+  alter table objects drop column cata; 
+ delete from objects;
  insert into catagory([name]) values
- ('Cloth and Cosmetics'),
- ('Cars'),
- ('Real Estate'),
- ('Other'),
- ('Food')
+ ('Shoes and Cloth'),
+ ('Beuty and Cosmetics'),
+ ('Electronics'),
+ ('Furniture'),
+ ('Custom Made'),
+ ('Other')
+ select * from objects;
+
+ alter table objects add is_deleted char(1) default 'N'; 
 
  select * from objects;
  exec [add_sale_object] @ownerId = 13, @name ='N', @brand = 'Brand', @quantity =1, @descr = 'dsdsdsdsds', @price =1.0, @cata = 1
@@ -224,5 +231,73 @@ create table objects(
 	 print 'Registered object!';
 
  end
+
+
+
+ alter function get_objects_of(@owner_id int)
+ returns Table
+ as return (select * from objects where owner_id = @owner_id and is_deleted = 'N') ;
+
+ select * from dbo.get_objects_of(13)
+
+ select * from objects;
+ alter proc delete_object(@objectId int)
+ as
+ begin
+      if (select count(*) from objects where id = @objectId) = 0
+	  begin
+	      raiserror('object does not exist!!!', 12, 1);
+		  return;
+	  end
+	  update objects  set is_deleted = 'Y'  where id = @objectId;
+ end
+
+
+ ---cart mini section
+
+ create table cart(id int primary key identity, obj_id int foreign key references objects(id) not null, 
+                  owner_id int foreign key references users(id) not null);
+select * from getCartOf(1);
+select * from objects;
+
+exec addInCart 13, 3
+create function getCartOf(@ownerId int) returns table
+as return (select * from cart where owner_id = @ownerId);
+
+alter proc addInCart(@ownerId int, @objectId int)
+as
+begin 
+    insert into cart(obj_id, owner_id) values( @objectId, @ownerId);
+end
+
+create proc removeFromCart(@ownerId int, @objectId int)
+as
+begin 
+    delete from  cart where   obj_id = @objectId AND owner_id = @ownerId
+end
+
+alter function getActiveSaleObjectWithinRange(@min money =0, @max money, @searchTerm varchar(20)='', @userId int)
+returns table
+as  return (
+         select * from active_objects where price >= @min and price <= @max and  
+		 (owner_id != @userId) and
+         (([name] LIKE concat('%', @searchTerm, '%') or brand like concat('%', @searchTerm, '%') or descr LIKE concat('%', @searchTerm, '%') )))
+
+
+select * from dbo.getActiveSaleObjectWithinRange(0, 100000, '');
+update objects set owner_id = 7;
+create view active_objects as (select * from objects where is_deleted = 'N' and quantity >0);
+
+
+create table transactions(id int primary key identity, buyer_id int foreign key references users(id) not null,
+                          obj_id int foreign key references objects(id) not null);
+alter table transactions add  ammount money not null;
+create table comments(id int primary key identity, msg varchar(200) not null, from_user int foreign key references users(id), 
+                      forobject int foreign key references objects(id));
+
+create view objects_carts as select count(*) as add_no, objects.id from objects inner join cart on cart.obj_id = objects.id group by objects.id;
+
+create view objects_comments as select count(*)as comment_no,  objects.id  from objects inner join comments on comments.forobject = objects.id group by objects.id;
+
 
 ----------------------------------------------------------------------------------------------------

@@ -36,7 +36,7 @@ public class BrowseObjectsView extends View {
 		if (Globals.searchTerm.equals("")) {
 			objs = SaleObject.all();
 		} else {
-			objs = SaleObject.search(Globals.searchTerm);
+			objs = SaleObject.search(Globals.minPrice, Globals.maxPrice, Globals.searchTerm);
 		}
 
 		var l = new GridBagLayout();

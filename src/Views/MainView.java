@@ -11,7 +11,10 @@ import java.awt.event.*;
 public class MainView extends View{
    private String searchTerm = "";
    private JTextField searchInput = new JTextField("Search for anything to buy...");
-   private JButton searchButton =  new JButton("Search");
+   private JTextField minInput = new JTextField("Input minimum price");
+	private JTextField maxInput = new JTextField("Input maximum  price");
+
+	private JButton searchButton =  new JButton("Search");
    private String name;
    private String lastName;
    private JLabel nameLabel = new JLabel();
@@ -40,7 +43,7 @@ public class MainView extends View{
    public MainView(){
 	   registerComponent(logoutButton);
 	   logoutButton.setText("Logout");
-	   registerComponent(nameLabel, buy, cart, ammount,myAccount,  myObjects, top,sellButton, myTrans,  searchButton, searchInput);
+	   registerComponent(minInput, maxInput,  nameLabel, buy, cart, ammount,myAccount,  myObjects, top,sellButton, myTrans,  searchButton, searchInput);
 	   init();
 	   buy.addActionListener(new ActionListener() {
 		   public void actionPerformed(ActionEvent e) {
@@ -84,6 +87,17 @@ public class MainView extends View{
 		   public void actionPerformed(ActionEvent e) {
 			   Globals.searchTerm = searchInput.getText();
 			   try {
+
+				try{
+					Globals.minPrice = Double.parseDouble(minInput.getText());
+				}catch (Exception ev){
+					ev.printStackTrace();
+				}
+				try{
+					   Globals.maxPrice = Double.parseDouble(maxInput.getText());
+				}catch (Exception ev){
+					   ev.printStackTrace();
+				}
 				Main.mainWindow.goToView("/browse");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -124,7 +138,12 @@ public class MainView extends View{
 	     
 	     lim.setBounds(0,0,1000,700);
 	     mainComponent.add(lim);
-	          
+		 mainComponent.add(maxInput);
+		 mainComponent.add(minInput);
+		 minInput.setBounds(380, 500, 200, 30);
+	     maxInput.setBounds(700, 500, 200, 30);
+
+
 	     nameLabel.setBounds(380, 150, 600, 50);
 	   searchInput.setBounds(380, 300, 300, 30);
 	   searchButton.setBounds(700, 300, 300, 30);
@@ -178,7 +197,9 @@ public class MainView extends View{
 	   lim.add(sellButton);
 	   lim.add(myAccount);
 	   lim.add(top);
-	   lim.add(logoutButton);  
+	   lim.add(logoutButton);
+	   lim.add(minInput);
+	   lim.add(maxInput);
 	   lim.add(nameLabel); 
 	   lim.add(buy); 
 	   lim.add(cart);  

@@ -17,7 +17,7 @@ public class Cart extends Model{
 		try {
 			
 		 
-			query("insert into cart(obj_id, owner_id) values('"+obj.getId()+"' ,'"+this.userId+"' )");
+			query("exec addInCart @ownerId= "+this.userId+ ", @objectId = "+obj.getId()+"");
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -27,7 +27,7 @@ public class Cart extends Model{
 	}
 	public boolean removeObject(SaleObject obj) {
 		try {	 
-			query("delete from  cart where   obj_id = "+obj.getId()+" AND owner_id = "+this.userId+" ");
+			query("exec removeFromCart  @ownerId= "+this.userId+ ", @objectId = "+obj.getId()+"");
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -40,7 +40,7 @@ public class Cart extends Model{
 	}
 	public SaleObject[] getSaleObjects() {
 		try {	 
-			ResultSet x = query("select * from  cart where  owner_id = "+this.userId);
+			ResultSet x = query("select * from getCartOf("+this.userId+");");
 			int len=0;
 			while(x.next()) len++;
 			 SaleObject[] objects= new SaleObject[len];

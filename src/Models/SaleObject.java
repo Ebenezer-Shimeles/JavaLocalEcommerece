@@ -16,11 +16,16 @@ public class SaleObject extends Model {
  
     public static SaleObject[] of(String userId) {
     	try {
-			var rs = query("select * from objects where owner_id = " + userId);
+			var rs = query(" select * from dbo.get_objects_of("+userId+ ")");
+
+            if(rs == null){
+                return new SaleObject[1];
+            }
 			int len=0;
 			while(rs.next()) len++;
-			SaleObject[] objects = new SaleObject[len];
-			rs = query("select * from objects where owner_id = " + userId);
+            SaleObject[] objects = new SaleObject[len];
+
+			rs = query(" select * from dbo.get_objects_of("+userId+ ")");
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));
@@ -42,11 +47,11 @@ public class SaleObject extends Model {
     
     public static SaleObject[] all() {
     	try {
-			var rs = query("select * from objects where (quantity > 0) and (not owner_id  = " + Globals.userId+")");
+			var rs = query("select * from active_objects where (quantity > 0) and (not owner_id  = " + Globals.userId+")");
 			int len=0;
 			while(rs.next()) len++;
 			SaleObject[] objects = new SaleObject[len];
-			rs = query("select * from objects where (quantity > 0) and (not owner_id = " + Globals.userId+") order by brand asc");
+			rs = query("select * from active_objects where (quantity > 0) and (not owner_id = " + Globals.userId+") order by brand asc");
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));
@@ -135,15 +140,14 @@ public class SaleObject extends Model {
      */
 
 
-    public static SaleObject[] search(String kw) {
+    public static SaleObject[] search(double minPrice, double maxPrice, String kw) {
     	try {
-			var rs = query("select * from objects where quantity > 0 and  "
-					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' )  and (not owner_id = " + Globals.userId+")");
+            final String q = "select * from dbo.getActiveSaleObjectWithinRange("+minPrice+", "+maxPrice+", '"+kw+"', "+Globals.userId+")";
+			var rs = query(q);
 			int len=0;
 			while(rs.next()) len++;
 			SaleObject[] objects = new SaleObject[len];
-			rs = query("select * from objects where quantity > 0 and  "
-					+ "(name LIKE '%"+kw+"%' or brand like '%"+kw+"%' or descr LIKE '%"+kw+"%' ) and (not owner_id = " + Globals.userId+") order by brand asc");
+			rs = query(q);
 		    for(int i=0;rs.next();i++) {
 		    	objects[i] = new SaleObject();
 		    	objects[i].setBrand(rs.getString("brand"));
@@ -192,7 +196,7 @@ public class SaleObject extends Model {
     public boolean delete() {
         // TODO Auto-generated method stub
         try {
-            query("delete from objects where id = " + id);
+            query("delete_object @objectId = " + id);
             return true;
         }catch(SQLException e) {
         	e.printStackTrace();
