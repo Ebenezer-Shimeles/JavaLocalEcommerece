@@ -67,6 +67,10 @@ public class User extends Model {
 	   System.out.println(
 			   id + " " + name + " " +lastName+ " " + gender+ " " + password + " " + age + " ");
 	}
+	public static void buyObject(String objId, String sellerId, String buyerId) throws SQLException{
+		query("exec buy @buyer_id = "+buyerId+" , @object_id="+objId+" ");
+	}
+
 	public static User findByEmail(String email) throws SQLException{
 		ResultSet result = query("select top 1 * from users where email = '"+ email+ "'");
     	if(!result.next()) return null;

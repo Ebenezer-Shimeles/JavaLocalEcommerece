@@ -319,6 +319,131 @@ create proc [write_comment](@msg varchar(200), @write int, @object int) as
         Insert into comments(msg, from_user, forobject) values(@msg, @write, @object);
  end
 
+ create function get_tans_of(@userId int) returns table
+ as
+ return (select * from transactions where (buyer_id = @userId) or (seller_id = @userId))
+
+ ALTER TABLE users
+SET (LOCK_ESCALATION =  DISABLE)
+ select * from users;
+
+ set LOCK_TIMEOUT 120000
+ alter proc deposit(@amm money, @userId int)
+ as
+ begin
+     
+	   begin try
+	       begin transaction
+	          update  users with (ROWLOCK)    set balance += @amm  where id = @userId;
+			  exec [reg_transaction] @userId , @amm,  @userId
+		   commit transaction
+		end try
+		begin catch
+		   rollback transaction
+		   
+		end catch
+	
+     
+ end
+ SELECT
+    OBJECT_NAME(P.object_id) AS TableName,
+    Resource_type,
+    request_session_id
+FROM
+    sys.dm_tran_locks L
+JOIN
+    sys.partitions P ON L.resource_associated_entity_id = p.hobt_id
+WHERE
+  OBJECT_NAME(P.object_id) = 'users'
+  exec buy @buyer_id  = 1 , @object_id=3 
+alter proc buy(@buyer_id int , @object_id int) as 
+begin
+   begin try
+	   begin transaction
+	        if (select count(*) from users where id = @buyer_id) = 0
+			begin 
+			   raiserror('Error the user does not exist', 12, -1);
+			   return
+			end
+
+			if (select count(*) from objects where id = @object_id) = 0
+			begin 
+			   raiserror('Error the object does not exist', 12, -1);
+			   return
+			end
+			declare @balance money;
+			select top 1 @balance = balance from users where id = @buyer_id;
+
+			declare @needed money;
+			select top 1 @needed = price from objects where id = @object_id;
+
+			if @balance < @needed
+			begin
+			   raiserror('error you do not have enough money', 12, -1); return;
+			end
+
+			declare @ownerId int;
+			select top 1 @ownerId = owner_id from objects where  id = @object_id;
+
+
+
+			update users with (ROWLOCK) set balance -= @needed where id = @buyer_id;
+			update users with (ROWLOCK) set balance += @needed where id = @ownerId;
+			
+			update objects with (ROWLOCK) set quantity -=1 where id = @object_id;
+
+			 exec [reg_transaction] @buyer_id , @needed,  @ownerId; 
+
+
+
+
+			
+	   commit transaction
+   end try
+   begin catch
+      raiserror('Error cannot buy!', 12, -1);
+   end catch
+   
+end
+
+alter trigger remove_zeros on objects
+after update
+as
+begin 
+   if update(quantity)
+   begin
+       declare @q int;
+	   declare @id int;
+       declare c cursor for (select id, quantity from inserted);
+	   open c
+	   fetch next from c into @id, @q
+	   while @@FETCH_STATUS = 0
+	   begin
+	      if @q = 0
+		  begin
+		     update objects set is_deleted = 'Y' where id = @id
+			  
+		  end
+		  fetch next from c into @id, @q
+	   end
+	   
+	   close c
+	   deallocate c
+   end
+end
+create trigger save_10k on transactions after insert
+as
+begin
+   if ((select count(*) from transactions) % 10000) = 0
+   begin
+    backup database Ecomm To Disk = 'c:\users\natan\Desktop\backup' with noinit,compression, differential;
+   end
+  
+end
+
+select * from objects;
+update objects set quantity = 0 
+
 
 
 

@@ -9,28 +9,29 @@ import Main.Globals;
 import Models.Cart;
 public class SaleObjectInteractor {
 	public static void buyObject(String objId, String sellerId, String buyerId) throws SQLException {
-		var user = User.findByPk(Globals.userId);
-		var obj = SaleObject.findById(objId);
-		if(!user.canBuy(obj.getMoney())) {
-			Main.Main.mainWindow.showMessage("It seems you don't have enough balance please recharge your account :(");
-			return;
-		}
-		
-		if(obj.getQuantity() <=0 ) {
-			Main.Main.mainWindow.showMessage("Object is sold out!");
-			return;
-		}
-		var seller = User.findByPk(sellerId);
-		user.deposit(-1 * obj.getMoney());
-		seller.deposit(obj.getMoney());
-		obj.setQuantity(obj.getQuantity() - 1);
-		obj.update();
-	    var t = new Transaction();
-	    t.setAmmount(obj.getMoney());
-	    t.setBuyer(User.findByPk(buyerId));
-	    t.setSellerId(sellerId);
-	    
-	    t.create();
+		User.buyObject(objId, sellerId, buyerId);
+//		var user = User.findByPk(Globals.userId);
+//		var obj = SaleObject.findById(objId);
+////		if(!user.canBuy(obj.getMoney())) {
+////			Main.Main.mainWindow.showMessage("It seems you don't have enough balance please recharge your account :(");
+////			return;
+////		}
+////
+////		if(obj.getQuantity() <=0 ) {
+////			Main.Main.mainWindow.showMessage("Object is sold out!");
+////			return;
+////		}
+//		var seller = User.findByPk(sellerId);
+//		user.deposit(-1 * obj.getMoney());
+//		seller.deposit(obj.getMoney());
+//		obj.setQuantity(obj.getQuantity() - 1);
+//		obj.update();
+////	    var t = new Transaction();
+////	    t.setAmmount(obj.getMoney());
+////	    t.setBuyer(User.findByPk(buyerId));
+////	    t.setSellerId(sellerId);
+////
+////	    t.create();
 	    Main.Main.mainWindow.showMessage("You have bought it :)");
 	}
 	public static void addToCart(String objectId, String userId) throws SQLException{

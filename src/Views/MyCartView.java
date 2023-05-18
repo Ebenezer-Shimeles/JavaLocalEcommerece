@@ -63,7 +63,7 @@ public class MyCartView extends View{
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						// Main.Main.mainWindow.clear();
-						Main.mainWindow.showMessage("Can not buy!");
+						Main.mainWindow.showMessage("Can not buy!" + e1.toString());
 						e1.printStackTrace();
 					}
 
