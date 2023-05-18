@@ -291,6 +291,7 @@ create view active_objects as (select * from objects where is_deleted = 'N' and 
 
 create table transactions(id int primary key identity, buyer_id int foreign key references users(id) not null,
                           obj_id int foreign key references objects(id) not null);
+alter table transactions add seller_id int foreign key references users(id)
 alter table transactions add  ammount money not null;
 create table comments(id int primary key identity, msg varchar(200) not null, from_user int foreign key references users(id), 
                       forobject int foreign key references objects(id));
@@ -298,6 +299,27 @@ create table comments(id int primary key identity, msg varchar(200) not null, fr
 create view objects_carts as select count(*) as add_no, objects.id from objects inner join cart on cart.obj_id = objects.id group by objects.id;
 
 create view objects_comments as select count(*)as comment_no,  objects.id  from objects inner join comments on comments.forobject = objects.id group by objects.id;
+
+alter proc [reg_transaction](@buyerId int , @ammount money, @sellerId int) as
+begin
+ insert into transactions(buyer_id, ammount, seller_id) values(@buyerId, @ammount, @sellerId);
+end
+
+alter table transactions drop FK__transacti__obj_i__4F7CD00D
+alter table transactions drop column obj_id;
+
+select * from transactions;
+select * from objects;
+update objects set is_deleted = 'N' , quantity=10;
+create function get_comments(@objid int) returns table
+as return (select * from comments where (forobject = @objid))
+
+create proc [write_comment](@msg varchar(200), @write int, @object int) as
+ begin
+        Insert into comments(msg, from_user, forobject) values(@msg, @write, @object);
+ end
+
+
 
 
 ----------------------------------------------------------------------------------------------------

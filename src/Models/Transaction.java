@@ -15,12 +15,13 @@ public class Transaction extends Model{
 	
 	public static Transaction[] findByUserId(String userId) {
 		try {
-			ResultSet r = query("select * from transactions where (buyer_id = "+userId+") or (seller_id = "+userId+") ");
+			final String q = "select * from get_tans_of("+userId+")";
+			ResultSet r = query(q);
 			int len = 0;
 			while(r.next()) len++;
 			
 			Transaction t[] = new Transaction[len];
-			 r = query("select * from transactions where (buyer_id = "+userId+") or (seller_id = "+userId+") ");
+			 r = query(q);
 			 
 			 for(int i = 0;r.next();i++) {
 				 t[i] = new Transaction();
@@ -71,7 +72,7 @@ public class Transaction extends Model{
 	@Override
 	public boolean create(){
 		try {
-			query("insert into transactions(buyer_id, ammount, seller_id) values("+buyerId+", "+ammount+", "+sellerId+") ");
+			query("exec [reg_transaction]  @buyerId="+this.buyerId+" , @ammount="+this.ammount+", @sellerId="+sellerId+"");
 			return true;
 		} 
 		catch(Exception e) {e.printStackTrace();return false;}

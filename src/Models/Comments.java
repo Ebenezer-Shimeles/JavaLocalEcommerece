@@ -32,12 +32,12 @@ public class Comments extends Model{
     
    public static Comments[] getByObjectId(String objectId) {
 		try {
-			ResultSet r = query("select * from comments where (forobject = "+objectId+") ");
+			ResultSet r = query( "select * from dbo.get_comments("+objectId+")");
 			int len = 0;
 			while(r.next()) len++;
 			
 			Comments t[] = new Comments[len];
-			 r = query("select * from comments where (forobject = "+objectId+") ");
+			 r = query("select * from dbo.get_comments("+objectId+")");
 			 for(int i = 0;r.next();i++) {
 				 t[i] = new Comments();
 				 
@@ -66,7 +66,7 @@ public class Comments extends Model{
 	@Override
 	public boolean create() {
 		try {
-			query("Insert into comments(msg, from_user, forobject) values('"+msg+"', "+writerId+","+objectId+" )");
+			query("exec [write_comment]@msg='"+this.msg+"', @write="+this.writerId+", @object="+this.objectId+"");
 			return true;
 		}catch(Exception e) {
 			e.printStackTrace();
