@@ -25,12 +25,17 @@ public class SellView extends View implements ActionListener{
 	    		return;
 	    	}
 	    	int cata = cataBox.getSelectedIndex();
-	    	SaleObjectInteractor.addSaleObject(Globals.userId, name, brand, quantity, desc, money, cata + 1);
+			try{
+	    	    SaleObjectInteractor.addSaleObject(Globals.userId, name, brand, quantity, desc, money, cata + 1);
+				Main.Main.mainWindow.goToView("/main");
+			}catch (Exception ev){
+				showMessage(ev.toString());
+			}
 	    	
 	    	
 	    	
 	    
-	    	Main.Main.mainWindow.goToView("/main");
+
 	    }catch(NumberFormatException ex) {
 	    	showMessage("Invalid number format given in price or quantity!");
 	    	return;

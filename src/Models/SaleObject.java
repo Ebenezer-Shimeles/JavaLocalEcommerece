@@ -171,17 +171,21 @@ public class SaleObject extends Model {
     }
 
     @Override
-    public boolean create() {
-        // TODO Auto-generated method stub
-        try {
-            query("INSERT into objects(owner_id,name,quantity, descr, price, brand , cata)"
-                    + "values("+ownerId+", '"+name+"', "+quantity+", '"+descr+"', "+money+" ,'"+brand+"', "+cata+" )");
+    public boolean create() throws SQLException{
+
+            query(
+
+                    "\n" +
+                            " exec [add_sale_object] @ownerId = " + this.ownerId+
+                            ", @name ='" + this.name + "'" +
+                            ", @brand = '" + this.brand + "'" +
+                            ", @quantity =" + this.quantity +
+                            ", @descr = '" + this.descr + "'" +
+                            ", @price =" + this.money +
+                            ", @cata = " + this.cata
+            );
             return true;
-        }catch(SQLException e) {
-            System.out.print("Unable to register object");
-            e.printStackTrace();
-            return false;
-        }
+
     }
 
     @Override

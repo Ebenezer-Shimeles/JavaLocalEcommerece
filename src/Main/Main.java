@@ -36,7 +36,7 @@ public class Main {
 			mainWindow.registerView("/signup", new SignupView());
 			mainWindow.registerView("/main", new MainView());
 			mainWindow.registerView("/transactions", new MyTransView());
-			//mainWindow.registerView("/sell", new SellView());
+			mainWindow.registerView("/sell", new SellView());
 			mainWindow.registerView("/browse", new BrowseObjectsView());
 			mainWindow.registerView("/myobjs", new MyObjectsView());
 			mainWindow.registerView("/mycart", new MyCartView());

@@ -61,7 +61,7 @@ public class SaleObjectInteractor {
     		double money,
     		int cata
     
-    		) {
+    		) throws SQLException{
     	
           var so = new SaleObject();
           so.setCata(cata);
@@ -71,6 +71,8 @@ public class SaleObjectInteractor {
           so.setName(name);
           so.setOwnerId(ownerId);
           so.setQuantity(quantity);
+		  System.out.println("Adding sale object");
           so.create();
+
     }
 }

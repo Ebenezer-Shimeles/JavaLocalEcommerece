@@ -118,9 +118,111 @@ end
 select * from users;
 exec [register_user] @name='dsds', @lastName='dsds', @gender='M', @email='e@b.com', @password='dsdsdsdefe383f0no3fnudlfndjfndfdfdd', @age=20;
 
-
 exec [register_user] @name = 'dsds' ,@lastName= 'dsds' ,@gender='M' ,@email='dsds@dsds.com' ,@password='muzebelahu' ,@age=1
 
 
 
 ------------------------------------------------------------
+
+--------------sales object bloc--------------------------------------------------------------------
+
+
+EXEC sp_addmessage 
+    @msgnum = 50006, 
+    @severity = 1, 
+    @msgtext = 'Owner Does not exist!!!!';
+EXEC sp_addmessage 
+    @msgnum = 50007, 
+    @severity = 1, 
+    @msgtext = 'Invalid quantity number given!';
+EXEC sp_addmessage 
+    @msgnum = 50008, 
+    @severity = 1, 
+    @msgtext = 'Invalid name given!';
+EXEC sp_addmessage 
+    @msgnum = 50009, 
+    @severity = 1, 
+    @msgtext = 'Invalid description given!';
+EXEC sp_addmessage 
+    @msgnum = 50010, 
+    @severity = 1, 
+    @msgtext = 'Invalid price given!';
+EXEC sp_addmessage 
+    @msgnum = 50011, 
+    @severity = 1, 
+    @msgtext = 'Category does not exist!';
+
+
+
+
+
+
+---------msgs
+create table objects(
+           id int primary key identity, 
+		   owner_id int foreign key references users(id) not null,
+           "name" varchar(20) not null, 
+		    brand varchar(20), 
+			quantity int not null default 1, 
+			descr varchar(MAX) ,
+            price money not null
+ );
+ create table catagory(id int identity primary key, name varchar(100) not null);
+ alter table objects add cata int foreign key references catagory(id);
+
+ insert into catagory([name]) values
+ ('Cloth and Cosmetics'),
+ ('Cars'),
+ ('Real Estate'),
+ ('Other'),
+ ('Food')
+
+ select * from objects;
+ exec [add_sale_object] @ownerId = 13, @name ='N', @brand = 'Brand', @quantity =1, @descr = 'dsdsdsdsds', @price =1.0, @cata = 1
+ exec [add_sale_object] @ownerId =1, @name ='Shoes', @brand ='dsds', @quantity =10,
+                             @descr ='dsddsdsdsdsd', @price =10, @cata =1;
+
+
+ alter proc add_sale_object(@ownerId int, @name varchar(20), @brand varchar(20), @quantity int,
+                             @descr varchar(MAX), @price money, @cata int 
+ )
+ as 
+ begin
+      if (select top 1 count(*) from [users] where id = @ownerId) = 0
+	  begin
+	      raiserror(50006, 12, -1);
+		  return;
+	  end
+	  if  @quantity <= 0
+	  begin
+	      raiserror(50007, 12, -1);
+		  return;
+	  end
+	  if len(@name) <= 3
+	  begin
+	       raiserror(50008, 12, -1);
+		  return;
+	  end
+	  if len(@descr) <= 8
+	  begin
+	       raiserror(50009, 12, -1);
+		  return;
+	  end
+	  if  @price <= 0
+	  begin
+	      raiserror(50010, 12, -1);
+		  return;
+	  end
+	  if (select top 1 count(*) from [catagory] where id = @cata) = 0
+	  begin
+	      raiserror(50011, 12, -1);
+		  return;
+	  end
+
+	 INSERT into objects(owner_id,[name],quantity, descr, price, brand , cata)
+	 values(@ownerId, @name, @quantity, @descr, @price ,@brand, @cata)
+	 print 'Registered object!';
+
+ end
+
+----------------------------------------------------------------------------------------------------
