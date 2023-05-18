@@ -12,6 +12,7 @@ public abstract class Model {
 	 public abstract boolean refresh();
      public static void init(){
     	 try {
+
 			      System.out.println("Loading connections....");
     	    	//  Runtime.getRuntime().loadLibrary("C:/Windows/System32/crypt32.dll");
     	          Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -20,7 +21,7 @@ public abstract class Model {
     	       
     	        		+"encrypt=true;trustServerCertificate=true;";
     	          con= DriverManager.getConnection(url);
-    	        
+    	          con.setAutoCommit(false);
     	          System.out.println("Database Connected");
     	      } catch(Exception e) {
     	    	  System.out.println("Cannot connect :((");

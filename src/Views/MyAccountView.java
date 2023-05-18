@@ -7,6 +7,7 @@ import Models.User;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class MyAccountView extends View{
     private JPanel mainComponent = new JPanel(new BorderLayout());
@@ -26,12 +27,15 @@ public class MyAccountView extends View{
  					   user = null;
  					   howMuch.setText("How much?");
  					    Main.mainWindow.goToView("/main");
- 				} catch (Exception e1) {
+ 				} catch (SQLException b) {
+					   showMessage(b.toString());
+					} catch (Exception e1) {
  					// TODO Auto-generated catch block
  					showMessage("Invalid format!");
  					System.out.print(e1);
  					e1.printStackTrace();
  				}
+
  			   
  		   }
  	   });

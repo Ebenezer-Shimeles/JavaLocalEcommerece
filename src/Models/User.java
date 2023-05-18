@@ -170,14 +170,10 @@ public class User extends Model {
     	    return true;
 
     }
-    public boolean deposit(double m) {
+    public void deposit(double m) throws SQLException{
     	refresh();
     
-    	double newBalance = this.balance + m;
-    	System.out.print("New Balance " + newBalance);
-    	this.setBalance(newBalance);
-    	return this.update();
-    	
+        query("exec deposit @amm = "+m+", @userId = "+this.getId()+"");
     }
     public boolean canBuy(double m) {
     	refresh();
